@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { userRequest, sortByLikes, sortByComments } from './actions/actions';
+import { userRequest, photoRequest, sortByLikes, sortByComments } from './actions/actions';
 import { photosSelector } from './selector/photosSelector';
 import { userSelector } from './selector/userSelector';
 
@@ -14,24 +14,34 @@ import Gallery from './components/Gallery/Gallery';
 const mapStateToProps = state => ({ photos: photosSelector(state), user: userSelector(state) });
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ userRequest, sortByLikes, sortByComments }, dispatch);
+    bindActionCreators({ userRequest, photoRequest, sortByLikes, sortByComments }, dispatch);
 
 class Application extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: '',
+      inputValue: '',
       expanded: false,
-      indexOfPhoto: 0
+      indexOfPhoto: 0,
+      countOfPhotos: 0
     };
   }
 
-  toggleExpandState = () => {
-    this.setState({ expanded: !this.state.expanded });
+  componentWillReceiveProps({ user, photos }) {
+    if (this.props.user !== user) {
+      this.props.photoRequest(user.id, this.state.countOfPhotos);
+    }
+    if (this.props.photos !== photos) {
+      this.setState({ countOfPhotos: photos.length });
+    }
+  }
+
+  handleUserRequest = () => {
+    this.props.userRequest(this.state.inputValue);
   };
 
-  handlePhotoRequest = () => {
-    this.props.userRequest(this.state.userId);
+  toggleExpandState = () => {
+    this.setState({ expanded: !this.state.expanded });
   };
 
   handlePhotoClick= (index) => {
@@ -39,21 +49,21 @@ class Application extends Component {
     this.setState({ indexOfPhoto: index });
   };
 
-  handleSetId = (id) => {
-    this.setState({ userId: id });
+  handleInputValue = (id) => {
+    this.setState({ inputValue: id });
   };
 
   render() {
-    const { userId, indexOfPhoto, expanded } = this.state;
+    const { inputValue, indexOfPhoto, expanded } = this.state;
     const { photos, user } = this.props;
     return (
       <div className="app">
         <Settings
           user={user}
-          userId={userId}
+          inputValue={inputValue}
           isPhotosEmpty={photos.length}
-          onPhotosRequest={this.handlePhotoRequest}
-          onSetUserId={this.handleSetId}
+          onUserRequest={this.handleUserRequest}
+          onInput={this.handleInputValue}
           onSortLikes={this.props.sortByLikes}
           onSortComments={this.props.sortByComments}
         />

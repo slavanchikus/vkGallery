@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Waypoint from 'react-waypoint';
 
 export default class Photos extends Component {
   static propTypes = {
@@ -11,21 +12,24 @@ export default class Photos extends Component {
   render() {
     const { photos, user } = this.props;
     return (
-      <div className="lightbox">
-        {user && user.first_name ? photos.map((pic, index) =>
-          <div
-            id={index}
-            key={pic.pid}
-            className="lightbox-image"
-            onClick={() => this.props.onPhotoClick(index)}
-            style={{ backgroundImage: `url(${pic.src})` }}
-          >
-            <div className="lightbox-likes">
-              <div className="like" /><span className="like-count">{pic.likes.count}</span>
-              <div className="comment" /><span className="comment-count">{pic.comments.count}</span>
-            </div>
-          </div>)
-            : <p>Введите никнейм или айди :)</p>}
+      <div>
+        <div className="lightbox">
+          {user && user.first_name ? photos.map((pic, index) =>
+            <div
+              id={index}
+              key={pic.pid}
+              className="lightbox-image"
+              onClick={() => this.props.onPhotoClick(index)}
+              style={{ backgroundImage: `url(${pic.src})` }}
+            >
+              <div className="lightbox-likes">
+                <div className="like" /><span className="like-count">{pic.likes.count}</span>
+                <div className="comment" /><span className="comment-count">{pic.comments.count}</span>
+              </div>
+            </div>)
+                  : <p>Введите никнейм или айди :)</p>}
+        </div>
+        { photos && photos.length === 50 ? <Waypoint onEnter={() => console.log('point')} /> : ''}
       </div>
     );
   }
