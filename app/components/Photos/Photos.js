@@ -7,6 +7,11 @@ export default class Photos extends Component {
     photos: PropTypes.array.isRequired,
     user: PropTypes.object.isRequired,
     onPhotoClick: PropTypes.func.isRequired,
+    onPhotoRequest: PropTypes.func.isRequired,
+  };
+
+  handlePhotoRequest = () => {
+    this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50);
   };
 
   render() {
@@ -29,7 +34,7 @@ export default class Photos extends Component {
             </div>)
                   : <p>Введите никнейм или айди :)</p>}
         </div>
-        { photos && photos.length === 50 ? <Waypoint onEnter={() => console.log('point')} /> : ''}
+        { photos && photos.length % 50 !== 1 ? <Waypoint onEnter={this.handlePhotoRequest} /> : ''}
       </div>
     );
   }

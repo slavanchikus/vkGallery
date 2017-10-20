@@ -23,16 +23,13 @@ class Application extends Component {
       inputValue: '',
       expanded: false,
       indexOfPhoto: 0,
-      countOfPhotos: 0
     };
   }
 
-  componentWillReceiveProps({ user, photos }) {
+  componentWillReceiveProps({ user }) {
     if (this.props.user !== user) {
-      this.props.photoRequest(user.id, this.state.countOfPhotos);
-    }
-    if (this.props.photos !== photos) {
-      this.setState({ countOfPhotos: photos.length });
+      const countPhotos = this.props.photos.length ? this.props.photos.length : 50;
+      this.props.photoRequest(user.id, 0, countPhotos);
     }
   }
 
@@ -71,6 +68,7 @@ class Application extends Component {
           user={user}
           photos={photos}
           onPhotoClick={this.handlePhotoClick}
+          onPhotoRequest={this.props.photoRequest}
         />
         {expanded ? <Gallery indexOfPhoto={indexOfPhoto} photos={photos} closeGallery={this.toggleExpandState} /> : ''}
       </div>

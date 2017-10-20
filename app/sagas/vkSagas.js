@@ -14,9 +14,9 @@ export function* fetchUser({ inputValue }) {
   }
 }
 
-export function* fetchPhotos({ userId, offset }) {
+export function* fetchPhotos({ userId, offset, count }) {
   try {
-    const payload = yield call(getPhotos, userId, offset);
+    const payload = yield call(getPhotos, userId, offset, count);
     yield put({ type: 'PHOTOS_REQUEST_COMPLETE', payload });
   } catch (error) {
     yield put({ type: 'PHOTOS_REQUEST_ERROR' });

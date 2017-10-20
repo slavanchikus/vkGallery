@@ -3,10 +3,11 @@ export const userRequest = inputValue => ({
   inputValue,
 });
 
-export const photoRequest = (userId, offset) => ({
+export const photoRequest = (userId, offset, count) => ({
   type: 'PHOTOS_REQUEST',
   userId,
-  offset
+  offset,
+  count,
 });
 
 export const sortByLikes = () => ({

@@ -5,7 +5,7 @@ export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case 'PHOTOS_REQUEST_COMPLETE': {
       const { response } = action.payload;
-      return [...response];
+      return [...state, ...response];
     }
     case 'PHOTOS_SORT_LIKES': {
       const sortLikes = state && state.sort((a, b) => b.likes.count - a.likes.count);

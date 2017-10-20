@@ -5,7 +5,7 @@ export const getUser = userId => fetch(`https://api.vk.com/method/users.get?user
     });
 
 
-export const getPhotos = (userId, offset) => fetch(`https://api.vk.com/method/photos.get?owner_id=${userId}&album_id=wall&rev=1&extended=1&offset=${offset}&count=50`)
+export const getPhotos = (userId, offset, count) => fetch(`https://api.vk.com/method/photos.get?owner_id=${userId}&album_id=wall&rev=1&extended=1&offset=${offset}&count=${count}`)
     .then(response => response.json())
     .catch((error) => {
       throw error;
