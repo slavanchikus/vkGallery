@@ -5,12 +5,11 @@ import { getPhotos, getUser } from '../api/vkApi';
 
 export function* fetchUser({ inputValue }) {
   try {
-    const payload = yield call(getUser, inputValue);
+    let payload = yield call(getUser, inputValue);
+    payload = { ...payload, inputValue };
     yield put({ type: 'USER_REQUEST_COMPLETE', payload });
   } catch (error) {
     window.location.replace('https://oauth.vk.com/authorize?client_id=6008884&display=page&redirect_uri=http://localhost:8080/&scope=friends&response_type=code&v=5.67');
-    yield put({ type: 'USER_REQUEST_ERROR' });
-    throw error;
   }
 }
 

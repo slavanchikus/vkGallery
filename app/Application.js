@@ -27,7 +27,7 @@ class Application extends Component {
   }
 
   componentWillReceiveProps({ user }) {
-    if (this.props.user !== user) {
+    if (this.props.user.id !== user.id) {
       const countPhotos = this.props.photos.length ? this.props.photos.length : 50;
       this.props.photoRequest(user.id, 0, countPhotos);
     }
@@ -37,10 +37,6 @@ class Application extends Component {
     this.props.userRequest(this.state.inputValue);
   };
 
-  toggleExpandState = () => {
-    this.setState({ expanded: !this.state.expanded });
-  };
-
   handlePhotoClick= (index) => {
     if (!this.state.expanded) this.setState({ expanded: true });
     this.setState({ indexOfPhoto: index });
@@ -48,6 +44,10 @@ class Application extends Component {
 
   handleInputValue = (id) => {
     this.setState({ inputValue: id });
+  };
+
+  toggleExpandState = () => {
+    this.setState({ expanded: !this.state.expanded });
   };
 
   render() {
@@ -60,7 +60,7 @@ class Application extends Component {
           inputValue={inputValue}
           isPhotosEmpty={photos.length}
           onUserRequest={this.handleUserRequest}
-          onInput={this.handleInputValue}
+          onChange={this.handleInputValue}
           onSortLikes={this.props.sortByLikes}
           onSortComments={this.props.sortByComments}
         />
@@ -70,7 +70,9 @@ class Application extends Component {
           onPhotoClick={this.handlePhotoClick}
           onPhotoRequest={this.props.photoRequest}
         />
-        {expanded ? <Gallery indexOfPhoto={indexOfPhoto} photos={photos} closeGallery={this.toggleExpandState} /> : ''}
+        {expanded &&
+          <Gallery indexOfPhoto={indexOfPhoto} photos={photos} closeGallery={this.toggleExpandState} />
+        }
       </div>
     );
   }

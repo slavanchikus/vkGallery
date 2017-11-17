@@ -47,6 +47,9 @@ p{
     box-sizing: border-box;
     margin-right: 19px;
 }
+.VK:disabled{
+    background-color: gainsboro;
+}
 .VKtext{
     padding-left: 10px;
     text-align: left;

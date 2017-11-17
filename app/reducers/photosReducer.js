@@ -1,6 +1,6 @@
 const initialState = [];
 
-export default function userReducer(state = initialState, action) {
+export default function photoReducer(state = initialState, action) {
   console.log(action);
   switch (action.type) {
     case 'PHOTOS_REQUEST_COMPLETE': {
