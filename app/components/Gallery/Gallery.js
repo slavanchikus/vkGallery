@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './Gallery.module.styl';
+
 export default class Gallery extends Component {
   static propTypes = {
     photos: PropTypes.array.isRequired,
@@ -74,8 +76,8 @@ export default class Gallery extends Component {
     const { photoIndex } = this.state;
     const { photos } = this.props;
     return (
-      <div className="overlay">
-        <div className="gallery_photo_block">
+      <div className={styles.overlay}>
+        <div className={styles.container}>
           <div onClick={this.handleClick}>
             <img
               ref={node => (this.photo = node)}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './Settings.module.styl';
+
 export default class Settings extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
@@ -44,18 +46,15 @@ export default class Settings extends Component {
     const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
     return (
       <div>
-        <div className="Input">
-          <input
-            type="text"
-            className="VKtext"
-            placeholder="Укажите ID"
-            value={inputValue}
-            onChange={this.handleChange}
-          />
-          <input type="submit" value="Взять фото" onClick={() => onUserRequest()} className="VK" disabled={disableButton} />
-          <input type="submit" value="Сортировка по лайкам" onClick={this.sortLike} className={`VK ${!isPhotosEmpty ? 'none' : ''}`} />
-          <input type="submit" value="Сортировка по комментам" onClick={this.sortComments} className={`VK ${!isPhotosEmpty ? 'none' : ''}`} />
-          <p className="info">Выбранный пользователь: {userInfo}</p>
+        <div className={styles.container}>
+          <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
+          <input type="submit" className={styles.input_submit} value="Взять фото" onClick={() => onUserRequest()} disabled={disableButton} />
+          {!isPhotosEmpty &&
+          <div>
+            <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} />
+            <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} />
+          </div>}
+          <p className={styles.info}>Выбранный пользователь: {userInfo}</p>
         </div>
       </div>
     );

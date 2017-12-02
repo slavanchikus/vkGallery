@@ -3,6 +3,9 @@ const initialState = [];
 export default function photoReducer(state = initialState, action) {
   console.log(action);
   switch (action.type) {
+    case 'USER_REQUEST_COMPLETE': {
+      return [];
+    }
     case 'PHOTOS_REQUEST_COMPLETE': {
       const { response } = action.payload;
       return [...state, ...response];

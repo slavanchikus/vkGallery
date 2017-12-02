@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import Waypoint from 'react-waypoint';
+
+import styles from './Photos.module.styl';
 
 export default class Photos extends Component {
   static propTypes = {
@@ -18,23 +21,25 @@ export default class Photos extends Component {
     const { photos, user } = this.props;
     return (
       <div>
-        <div className="lightbox">
-          {user && user.first_name ? photos.map((pic, index) =>
+        <div className={styles.container}>
+          {user && user.first_name && photos && photos.map((pic, index) =>
             <div
               id={index}
               key={pic.pid}
-              className="lightbox-image"
+              className={styles.img}
               onClick={() => this.props.onPhotoClick(index)}
               style={{ backgroundImage: `url(${pic.src})` }}
             >
-              <div className="lightbox-likes">
-                <div className="like" /><span className="like-count">{pic.likes.count}</span>
-                <div className="comment" /><span className="comment-count">{pic.comments.count}</span>
+              <div className={styles.panel}>
+                <div className={styles.like} /><span className={styles.count}>{pic.likes.count}</span>
+                <div className={styles.comment} /><span className={styles.count}>{pic.comments.count}</span>
               </div>
-            </div>)
-                  : <p>Введите никнейм или айди :)</p>}
+            </div>)}
+          {!photos.length && user.first_name && <p>У существующего пользователя нет фоток :(</p>}
+          {!photos.length && user.error && <p>Юзера с таким ид не существует :(</p>}
+          {!photos.length && !user.first_name && !user.error && <p>Введите никнейм или айди :)</p>}
         </div>
-        { photos && photos.length % 50 !== 1 ? <Waypoint onEnter={this.handlePhotoRequest} /> : ''}
+        {photos && photos.length % 50 !== 1 && <Waypoint onEnter={this.handlePhotoRequest} />}
       </div>
     );
   }

@@ -4,13 +4,13 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './reducers/store';
 
-import Application from './Application';
+import MainContainer from './components/MainContainer/MainContainer';
 
 export class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Application />
+        <MainContainer />
       </Provider>
     );
   }

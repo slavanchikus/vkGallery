@@ -3,20 +3,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { userRequest, photoRequest, sortByLikes, sortByComments } from './actions/actions';
-import { photosSelector } from './selector/photosSelector';
-import { userSelector } from './selector/userSelector';
+import { userRequest, photoRequest, sortByLikes, sortByComments } from '../../actions/actions';
+import { photosSelector } from '../../selector/photosSelector';
+import { userSelector } from '../../selector/userSelector';
 
-import Settings from './components/Settings/Settings.js';
-import Photos from './components/Photos/Photos.js';
-import Gallery from './components/Gallery/Gallery';
+import Settings from '../Settings/Settings.js';
+import Photos from '../Photos/Photos.js';
+import Gallery from '../Gallery/Gallery';
+
+import styles from './MainContainer.module.styl';
 
 const mapStateToProps = state => ({ photos: photosSelector(state), user: userSelector(state) });
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators({ userRequest, photoRequest, sortByLikes, sortByComments }, dispatch);
 
-class Application extends Component {
+class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +29,7 @@ class Application extends Component {
   }
 
   componentWillReceiveProps({ user }) {
-    if (this.props.user.id !== user.id) {
+    if (this.props.user.id !== user.id && !this.props.user.error) {
       const countPhotos = this.props.photos.length ? this.props.photos.length : 50;
       this.props.photoRequest(user.id, 0, countPhotos);
     }
@@ -54,7 +56,7 @@ class Application extends Component {
     const { inputValue, indexOfPhoto, expanded } = this.state;
     const { photos, user } = this.props;
     return (
-      <div className="app">
+      <div className={styles.container}>
         <Settings
           user={user}
           inputValue={inputValue}
@@ -78,5 +80,5 @@ class Application extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Application);
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
 
