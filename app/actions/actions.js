@@ -1,3 +1,7 @@
+export const tokenRequest = () => ({
+  type: 'TOKEN_REQUEST',
+});
+
 export const userRequest = inputValue => ({
   type: 'USER_REQUEST',
   inputValue,

@@ -15,14 +15,14 @@ export default class Settings extends Component {
   };
 
   state = {
-    disableButton: false
+    disableTakeButton: false
   };
 
   componentWillReceiveProps({ user, inputValue }) {
     if (user.lastInputValue === inputValue) {
-      this.setState({ disableButton: true });
-    } else if (this.state.disableButton) {
-      this.setState({ disableButton: false });
+      this.setState({ disableTakeButton: true });
+    } else if (this.state.disableTakeButton) {
+      this.setState({ disableTakeButton: false });
     }
   }
 
@@ -41,21 +41,19 @@ export default class Settings extends Component {
   };
 
   render() {
-    const { disableButton } = this.state;
+    const { disableTakeButton } = this.state;
     const { user, inputValue, onUserRequest, isPhotosEmpty } = this.props;
     const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
     return (
-      <div>
-        <div className={styles.container}>
-          <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
-          <input type="submit" className={styles.input_submit} value="Взять фото" onClick={() => onUserRequest()} disabled={disableButton} />
-          {!isPhotosEmpty &&
+      <div className={styles.container}>
+        <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
+        <input type="submit" className={styles.input_submit} value="Взять фото" onClick={() => onUserRequest()} disabled={disableTakeButton} />
+        {!isPhotosEmpty &&
           <div>
             <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} />
             <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} />
           </div>}
-          <p className={styles.info}>Выбранный пользователь: {userInfo}</p>
-        </div>
+        <p className={styles.info}>Выбранный пользователь: {userInfo}</p>
       </div>
     );
   }

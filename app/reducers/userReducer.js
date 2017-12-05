@@ -6,7 +6,7 @@ export default function userReducer(state = initialState, action) {
     case 'USER_REQUEST_COMPLETE': {
       const { response, error, inputValue } = action.payload;
       if (error) {
-        return { error: true }
+        return { error: true };
       }
       return {
         ...response[0],

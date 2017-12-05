@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { userRequest, photoRequest, sortByLikes, sortByComments } from '../../actions/actions';
+import { tokenRequest, userRequest, photoRequest, sortByLikes, sortByComments } from '../../actions/actions';
 import { photosSelector } from '../../selector/photosSelector';
 import { userSelector } from '../../selector/userSelector';
 
@@ -11,21 +11,29 @@ import Settings from '../Settings/Settings.js';
 import Photos from '../Photos/Photos.js';
 import Gallery from '../Gallery/Gallery';
 
+import { getAccessToken } from '../../utils/getAccessToken';
+
 import styles from './MainContainer.module.styl';
 
 const mapStateToProps = state => ({ photos: photosSelector(state), user: userSelector(state) });
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ userRequest, photoRequest, sortByLikes, sortByComments }, dispatch);
+    bindActionCreators({ tokenRequest, userRequest, photoRequest, sortByLikes, sortByComments }, dispatch);
 
 class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputValue: '',
-      expanded: false,
+      isGalleryVisible: false,
       indexOfPhoto: 0,
     };
+  }
+
+  componentDidMount() {
+    const accessToken = localStorage.getItem('access_token_vkGallery') || getAccessToken();
+    if (!accessToken) this.props.tokenRequest();
+    this.props.userRequest(localStorage.getItem('user_id_vkGallery'));
   }
 
   componentWillReceiveProps({ user }) {
@@ -40,7 +48,7 @@ class MainContainer extends Component {
   };
 
   handlePhotoClick= (index) => {
-    if (!this.state.expanded) this.setState({ expanded: true });
+    if (!this.state.isGalleryVisible) this.setState({ isGalleryVisible: true });
     this.setState({ indexOfPhoto: index });
   };
 
@@ -49,11 +57,11 @@ class MainContainer extends Component {
   };
 
   toggleExpandState = () => {
-    this.setState({ expanded: !this.state.expanded });
+    this.setState({ isGalleryVisible: !this.state.isGalleryVisible });
   };
 
   render() {
-    const { inputValue, indexOfPhoto, expanded } = this.state;
+    const { inputValue, indexOfPhoto, isGalleryVisible } = this.state;
     const { photos, user } = this.props;
     return (
       <div className={styles.container}>
@@ -72,7 +80,7 @@ class MainContainer extends Component {
           onPhotoClick={this.handlePhotoClick}
           onPhotoRequest={this.props.photoRequest}
         />
-        {expanded &&
+        {isGalleryVisible &&
           <Gallery indexOfPhoto={indexOfPhoto} photos={photos} closeGallery={this.toggleExpandState} />
         }
       </div>

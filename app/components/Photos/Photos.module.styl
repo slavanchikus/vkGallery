@@ -14,23 +14,32 @@
   box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
 
 .panel
+  display: flex
+  flex-direction: row
+  justify-content: center
+  align-items: end
   font-size: 14px
   color: #2a5885
   background: white
   opacity: 0.9
-  text-align: center
 
 .count
   display: inline-block
   margin-left: -2px
 
 .like
-  background: url(../../../build/img/like.png) no-repeat
+  width: 14px
+  height: 14px
+  background: url(../../img/like.png) no-repeat
   background-size: contain
   background-position-y: 1px
+  margin-right: 5px
 
 .comment
-  background: url(../../../build/img/comment.png) no-repeat
+  width: 14px
+  height: 14px
+  background: url(../../img/comment.png) no-repeat
   background-size: contain
   background-position-y: 1px
-  margin-left: 12px;
+  margin-left: 12px
+  margin-right: 5px

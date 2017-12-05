@@ -39,7 +39,7 @@ export default class Photos extends Component {
           {!photos.length && user.error && <p>Юзера с таким ид не существует :(</p>}
           {!photos.length && !user.first_name && !user.error && <p>Введите никнейм или айди :)</p>}
         </div>
-        {photos && photos.length % 50 !== 1 && <Waypoint onEnter={this.handlePhotoRequest} />}
+        {photos.length && photos.length % 50 !== 1 && <Waypoint onEnter={this.handlePhotoRequest} />}
       </div>
     );
   }
