@@ -15,16 +15,8 @@ export default class Settings extends Component {
   };
 
   state = {
-    disableTakeButton: false
+    disableTakeButton: true
   };
-
-  componentWillReceiveProps({ user, inputValue }) {
-    if (user.lastInputValue === inputValue) {
-      this.setState({ disableTakeButton: true });
-    } else if (this.state.disableTakeButton) {
-      this.setState({ disableTakeButton: false });
-    }
-  }
 
   sortLike = (e) => {
     e.preventDefault();
@@ -38,6 +30,11 @@ export default class Settings extends Component {
 
   handleChange = (e) => {
     this.props.onChange(e.target.value);
+    if (e.target.value.length > 0) {
+      this.setState({ disableTakeButton: false });
+    } else {
+      this.setState({ disableTakeButton: true });
+    }
   };
 
   render() {
@@ -53,6 +50,10 @@ export default class Settings extends Component {
             <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} />
             <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} />
           </div>}
+        {isPhotosEmpty && user.first_name &&
+        <p className={styles.info}>У существующего пользователя нет фоток :(</p> }
+        {user.error &&
+        <p className={styles.info}>Юзера с таким ид не существует :(</p> }
         <p className={styles.info}>Выбранный пользователь: {userInfo}</p>
       </div>
     );

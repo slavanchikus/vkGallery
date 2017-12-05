@@ -9,7 +9,7 @@ export const getAccessToken = () => {
     }
     if (decodeURIComponent(pair[0]) === 'user_id') {
       const userId = decodeURIComponent(pair[1]);
-      localStorage.setItem('user_id', userId);
+      localStorage.setItem('user_id_vkGallery', userId);
     }
   }
   return null;

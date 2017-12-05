@@ -32,12 +32,13 @@ class MainContainer extends Component {
 
   componentDidMount() {
     const accessToken = localStorage.getItem('access_token_vkGallery') || getAccessToken();
+    const userId = localStorage.getItem('user_id_vkGallery');
     if (!accessToken) this.props.tokenRequest();
-    this.props.userRequest(localStorage.getItem('user_id_vkGallery'));
+    this.props.userRequest(userId);
   }
 
   componentWillReceiveProps({ user }) {
-    if (this.props.user.id !== user.id && !this.props.user.error) {
+    if (this.props.user.id !== user.id && !user.error) {
       const countPhotos = this.props.photos.length ? this.props.photos.length : 50;
       this.props.photoRequest(user.id, 0, countPhotos);
     }
@@ -68,20 +69,26 @@ class MainContainer extends Component {
         <Settings
           user={user}
           inputValue={inputValue}
-          isPhotosEmpty={photos.length}
-          onUserRequest={this.handleUserRequest}
+          isPhotosEmpty={photos.length < 1}
           onChange={this.handleInputValue}
+          onUserRequest={this.handleUserRequest}
           onSortLikes={this.props.sortByLikes}
           onSortComments={this.props.sortByComments}
         />
+        {photos.length > 0 &&
         <Photos
           user={user}
           photos={photos}
           onPhotoClick={this.handlePhotoClick}
           onPhotoRequest={this.props.photoRequest}
         />
+        }
         {isGalleryVisible &&
-          <Gallery indexOfPhoto={indexOfPhoto} photos={photos} closeGallery={this.toggleExpandState} />
+        <Gallery
+          indexOfPhoto={indexOfPhoto}
+          photos={photos}
+          closeGallery={this.toggleExpandState}
+        />
         }
       </div>
     );

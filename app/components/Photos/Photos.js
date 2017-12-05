@@ -35,9 +35,6 @@ export default class Photos extends Component {
                 <div className={styles.comment} /><span className={styles.count}>{pic.comments.count}</span>
               </div>
             </div>)}
-          {!photos.length && user.first_name && <p>У существующего пользователя нет фоток :(</p>}
-          {!photos.length && user.error && <p>Юзера с таким ид не существует :(</p>}
-          {!photos.length && !user.first_name && !user.error && <p>Введите никнейм или айди :)</p>}
         </div>
         {photos.length && photos.length % 50 !== 1 && <Waypoint onEnter={this.handlePhotoRequest} />}
       </div>

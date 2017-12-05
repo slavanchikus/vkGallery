@@ -1,5 +1,5 @@
 {
-  "name": "VkApi",
+  "name": "VkGallery",
   "version": "1.0.0",
   "description": "VK photos of user",
   "main": "index.js",
