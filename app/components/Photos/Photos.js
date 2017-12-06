@@ -13,7 +13,12 @@ export default class Photos extends Component {
     onPhotoRequest: PropTypes.func.isRequired,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.photos !== this.props.photos;
+  }
+
   handlePhotoRequest = () => {
+    console.log('gg');
     this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50);
   };
 

@@ -3,22 +3,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { tokenRequest, userRequest, photoRequest, sortByLikes, sortByComments } from '../../actions/actions';
-import { photosSelector } from '../../selector/photosSelector';
-import { userSelector } from '../../selector/userSelector';
+import { tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments } from '../../actions/actions';
+import { photosSelector, userSelector, friendsSelector } from '../../selector/mainSelector';
 
 import Settings from '../Settings/Settings.js';
 import Photos from '../Photos/Photos.js';
 import Gallery from '../Gallery/Gallery';
+import FriendsBar from '../FriendsBar/FriendsBar';
 
 import { getAccessToken } from '../../utils/getAccessToken';
 
 import styles from './MainContainer.module.styl';
 
-const mapStateToProps = state => ({ photos: photosSelector(state), user: userSelector(state) });
+const mapStateToProps = state => ({
+  photos: photosSelector(state),
+  user: userSelector(state),
+  friends: friendsSelector(state),
+});
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ tokenRequest, userRequest, photoRequest, sortByLikes, sortByComments }, dispatch);
+    bindActionCreators({ tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments }, dispatch);
 
 class MainContainer extends Component {
   constructor(props) {
@@ -32,9 +36,11 @@ class MainContainer extends Component {
 
   componentDidMount() {
     const accessToken = localStorage.getItem('access_token_vkGallery') || getAccessToken();
-    const userId = localStorage.getItem('user_id_vkGallery');
+    const inputValue = localStorage.getItem('user_id_vkGallery');
     if (!accessToken) this.props.tokenRequest();
-    this.props.userRequest(userId);
+    this.props.userRequest(inputValue);
+    this.handleInputValue(inputValue);
+    setTimeout(() => this.props.friendsRequest(inputValue), 1000);
   }
 
   componentWillReceiveProps({ user }) {
@@ -63,7 +69,7 @@ class MainContainer extends Component {
 
   render() {
     const { inputValue, indexOfPhoto, isGalleryVisible } = this.state;
-    const { photos, user } = this.props;
+    const { photos, user, friends } = this.props;
     return (
       <div className={styles.container}>
         <Settings
@@ -88,6 +94,13 @@ class MainContainer extends Component {
           indexOfPhoto={indexOfPhoto}
           photos={photos}
           closeGallery={this.toggleExpandState}
+        />
+        }
+        {friends.length > 0 &&
+        <FriendsBar
+          friends={friends}
+          onUserRequest={this.props.userRequest}
+          onChangeInput={this.handleInputValue}
         />
         }
       </div>

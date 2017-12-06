@@ -3,11 +3,11 @@ const initialState = [];
 export default function photoReducer(state = initialState, action) {
   console.log(action);
   switch (action.type) {
-    case 'USER_REQUEST_COMPLETE': {
-      return [];
-    }
     case 'PHOTOS_REQUEST_COMPLETE': {
       const { response } = action.payload;
+      if (state.length > 0 && state[0].owner_id !== response[0].owner_id) {
+        return response;
+      }
       return [...state, ...response];
     }
     case 'PHOTOS_SORT_LIKES': {

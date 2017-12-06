@@ -7,6 +7,11 @@ export const userRequest = inputValue => ({
   inputValue,
 });
 
+export const friendsRequest = userId => ({
+  type: 'FRIENDS_REQUEST',
+  userId,
+});
+
 export const photoRequest = (userId, offset, count) => ({
   type: 'PHOTOS_REQUEST',
   userId,

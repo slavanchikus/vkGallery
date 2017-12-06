@@ -10,3 +10,9 @@ export const getPhotos = (userId, offset, count) => fetch(`https://api.vk.com/me
     .catch((error) => {
       throw error;
     });
+
+export const getFreinds = userId => fetch(`https://api.vk.com/method/friends.get?user_id=${userId}&order=hints&fields=photo_50&v=5.67`)
+    .then(response => response.json())
+    .catch((error) => {
+      throw error;
+    });

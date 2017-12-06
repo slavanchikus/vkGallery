@@ -15,7 +15,7 @@ export default class Settings extends Component {
   };
 
   state = {
-    disableTakeButton: true
+    disableTakeButton: false
   };
 
   sortLike = (e) => {
@@ -37,24 +37,26 @@ export default class Settings extends Component {
     }
   };
 
+  handleUserRequest = () => {
+    const { onUserRequest, user, inputValue } = this.props;
+    if (user.lastInputValue !== inputValue) onUserRequest(inputValue);
+  };
+
   render() {
     const { disableTakeButton } = this.state;
-    const { user, inputValue, onUserRequest, isPhotosEmpty } = this.props;
+    const { user, inputValue, isPhotosEmpty } = this.props;
     const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
-        <input type="submit" className={styles.input_submit} value="Взять фото" onClick={() => onUserRequest()} disabled={disableTakeButton} />
-        {!isPhotosEmpty &&
-          <div>
-            <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} />
-            <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} />
-          </div>}
+        <input type="submit" className={styles.input_submit} value="Взять фото" onClick={this.handleUserRequest} disabled={disableTakeButton} />
+        <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} disabled={isPhotosEmpty} />
+        <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} disabled={isPhotosEmpty} />
         {isPhotosEmpty && user.first_name &&
         <p className={styles.info}>У существующего пользователя нет фоток :(</p> }
         {user.error &&
         <p className={styles.info}>Юзера с таким ид не существует :(</p> }
-        <p className={styles.info}>Выбранный пользователь: {userInfo}</p>
+        <div className={styles.info}>Выбранный пользователь <br/> {userInfo}</div>
       </div>
     );
   }
