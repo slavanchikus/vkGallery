@@ -53,9 +53,9 @@ export default class Settings extends Component {
         <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} disabled={isPhotosEmpty} />
         <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} disabled={isPhotosEmpty} />
         {isPhotosEmpty && user.first_name &&
-        <p className={styles.info}>У существующего пользователя нет фоток :(</p> }
+        <div className={styles.error}>У существующего пользователя нет фоток :(</div> }
         {user.error &&
-        <p className={styles.info}>Юзера с таким ид не существует :(</p> }
+        <div className={styles.error}>Юзера с таким ид не существует :(</div> }
         <div className={styles.info}>Выбранный пользователь <br/> {userInfo}</div>
       </div>
     );

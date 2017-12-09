@@ -3,9 +3,18 @@ const initialState = [];
 export default function photoReducer(state = initialState, action) {
   console.log(action);
   switch (action.type) {
+    case 'USER_REQUEST_COMPLETE': {
+      const { error } = action.payload;
+      if (error) {
+        return initialState;
+      }
+      return state;
+    }
     case 'PHOTOS_REQUEST_COMPLETE': {
       const { response } = action.payload;
-      if (state.length > 0 && state[0].owner_id !== response[0].owner_id) {
+      const currentUserId = state[0] ? state[0].owner_id : null;
+      const responseUserId = response[0] ? response[0].owner_id : null;
+      if (currentUserId !== responseUserId) {
         return response;
       }
       return [...state, ...response];

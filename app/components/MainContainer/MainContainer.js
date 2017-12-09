@@ -28,6 +28,7 @@ class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isAppReady: false,
       inputValue: '',
       isGalleryVisible: false,
       indexOfPhoto: 0,
@@ -43,10 +44,12 @@ class MainContainer extends Component {
     setTimeout(() => this.props.friendsRequest(inputValue), 1000);
   }
 
-  componentWillReceiveProps({ user }) {
+  componentWillReceiveProps({ user, friends }) {
     if (this.props.user.id !== user.id && !user.error) {
-      const countPhotos = this.props.photos.length ? this.props.photos.length : 50;
-      this.props.photoRequest(user.id, 0, countPhotos);
+      this.props.photoRequest(user.id, 0, 50);
+    }
+    if (this.props.friends !== friends) {
+      this.setState({ isAppReady: true });
     }
   }
 
@@ -68,8 +71,13 @@ class MainContainer extends Component {
   };
 
   render() {
-    const { inputValue, indexOfPhoto, isGalleryVisible } = this.state;
+    const { isAppReady, inputValue, indexOfPhoto, isGalleryVisible } = this.state;
     const { photos, user, friends } = this.props;
+    if (!isAppReady) {
+      return (
+        <div className={styles.spinner} />
+      );
+    }
     return (
       <div className={styles.container}>
         <Settings

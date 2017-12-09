@@ -10,6 +10,10 @@ export default class FriendsBar extends Component {
     onChangeInput: PropTypes.func.isRequired,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.friends !== this.props.friends;
+  }
+
   handleClick = (e) => {
     const userId = e.target.getAttribute('data-userid');
     if (userId) {

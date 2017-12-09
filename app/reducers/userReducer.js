@@ -8,7 +8,7 @@ export default function userReducer(state = initialState, action) {
         return { error: true };
       }
       return {
-        ...action.payload,
+        ...action.payload.response[0],
         lastInputValue: inputValue
       };
     }

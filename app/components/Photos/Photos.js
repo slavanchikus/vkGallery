@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Waypoint from 'react-waypoint';
-
 import styles from './Photos.module.styl';
 
 export default class Photos extends Component {
@@ -17,16 +15,17 @@ export default class Photos extends Component {
     return nextProps.photos !== this.props.photos;
   }
 
-  handlePhotoRequest = () => {
-    console.log('gg');
-    this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50);
+  handleScroll = () => {
+    if ((this.container.scrollHeight - this.container.scrollTop === this.container.clientHeight) && this.props.photos.length % 50 === 0) {
+      this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50);
+    }
   };
 
   render() {
     const { photos, user } = this.props;
     return (
       <div>
-        <div className={styles.container}>
+        <div className={styles.container} onScroll={this.handleScroll} ref={node => (this.container = node)}>
           {user && user.first_name && photos && photos.map((pic, index) =>
             <div
               id={index}
@@ -41,7 +40,6 @@ export default class Photos extends Component {
               </div>
             </div>)}
         </div>
-        {photos.length && photos.length % 50 !== 1 && <Waypoint onEnter={this.handlePhotoRequest} />}
       </div>
     );
   }
