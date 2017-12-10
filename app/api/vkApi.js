@@ -1,17 +1,19 @@
-export const getUser = userId => fetch(`https://api.vk.com/method/users.get?user_ids=${userId}&fields=bdate&v=5.67`)
+import fetchJsonp from 'fetch-jsonp';
+
+export const getUser = userId => fetchJsonp(`https://api.vk.com/method/users.get?user_ids=${userId}&fields=bdate&v=5.67`)
     .then(response => response.json())
     .catch((error) => {
       throw error;
     });
 
 
-export const getPhotos = (userId, offset, count) => fetch(`https://api.vk.com/method/photos.get?owner_id=${userId}&album_id=wall&rev=1&extended=1&offset=${offset}&count=${count}`)
+export const getPhotos = (userId, offset, count) => fetchJsonp(`https://api.vk.com/method/photos.get?owner_id=${userId}&album_id=wall&rev=1&extended=1&offset=${offset}&count=${count}`)
     .then(response => response.json())
     .catch((error) => {
       throw error;
     });
 
-export const getFreinds = userId => fetch(`https://api.vk.com/method/friends.get?user_id=${userId}&order=hints&fields=photo_50&v=5.67`)
+export const getFreinds = userId => fetchJsonp(`https://api.vk.com/method/friends.get?user_id=${userId}&order=hints&fields=photo_50&v=5.67`)
     .then(response => response.json())
     .catch((error) => {
       throw error;

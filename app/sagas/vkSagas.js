@@ -5,7 +5,7 @@ import { getPhotos, getUser, getFreinds } from '../api/vkApi';
 
 export function* fetchAccessToken() {
   try {
-    window.location.replace('https://oauth.vk.com/authorize?client_id=6285810&display=popup&redirect_uri=http://localhost:8080&scope=friends&response_type=token&v=5.69');
+    window.location.replace(`https://oauth.vk.com/authorize?client_id=6285810&display=popup&redirect_uri=${window.location.href}&scope=friends&response_type=token&v=5.69`);
   } catch (error) {
     yield put({ type: 'TOKEN_REQUEST_ERROR' });
     throw error;
