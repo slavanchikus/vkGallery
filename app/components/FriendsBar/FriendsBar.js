@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import cx from 'classnames';
+
 import styles from './FriendsBar.module.styl';
 
 export default class FriendsBar extends Component {
@@ -10,8 +12,14 @@ export default class FriendsBar extends Component {
     onChangeInput: PropTypes.func.isRequired,
   };
 
+  state = {
+    expanded: false,
+    friendsList: this.props.friends,
+  };
+
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.friends !== this.props.friends;
+    return nextState.expanded !== this.state.expanded ||
+        nextState.friendsList !== this.state.friendsList;
   }
 
   handleClick = (e) => {
@@ -22,20 +30,41 @@ export default class FriendsBar extends Component {
     }
   };
 
+  handleChange = (e) => {
+    const filtredFriends = Object.keys(this.props.friends).reduce((sum, id) => {
+      const friend = this.props.friends[id];
+      if (`${friend.first_name} ${friend.last_name}`.toLowerCase().indexOf(e.target.value.toLowerCase()) > -1) {
+        sum.push(friend);
+      }
+      return sum;
+    }, []);
+    this.setState({ friendsList: filtredFriends });
+  };
+
   render() {
-    const { friends } = this.props;
+    const { expanded, friendsList } = this.state;
+    const containerClassName = cx(styles.container, {
+      [styles.expanded]: expanded,
+    });
     return (
-      <div className={styles.container} onClick={this.handleClick}>
-        {friends && friends.map(item => (
-          <div key={item.id}>
-            <img
-              data-userid={item.id}
-              src={item.photo_50}
-              alt={`${item.first_name} ${item.last_name}`}
-            />
-          </div>
-        ))
-        }
+      <div className={containerClassName} onClick={this.handleClick}>
+        <div className={styles.search} onClick={() => this.setState({ expanded: !this.state.expanded })} />
+        <input type="text" className={styles.input} onChange={this.handleChange} />
+        <div>
+          {friendsList && friendsList.map(item => (
+            <div key={item.id} className={styles.friend_block}>
+              <img
+                data-userid={item.id}
+                src={item.photo_50}
+                alt={`${item.first_name} ${item.last_name}`}
+              />
+              <div className={styles.name}>
+                {`${item.first_name} ${item.last_name}`}
+              </div>
+            </div>
+            ))
+            }
+        </div>
       </div>
     );
   }

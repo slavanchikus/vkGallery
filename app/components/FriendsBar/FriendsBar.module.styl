@@ -1,14 +1,17 @@
 .container
   position: fixed
+  width: 50px
   height: 899px
   left: 0
   top: 19px
-  overflow: overlay
+  overflow-y: overlay
+  overflow-x: hidden
   background: #fff
   border-radius: 2px
   box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
   padding: 14px
   padding-left: 7px
+  transition: all .3s linear
   &::-webkit-scrollbar-track
     background-color: #fff
   &::-webkit-scrollbar
@@ -20,3 +23,52 @@
   img
     border-radius: 50%
     cursor: pointer
+
+.friend_block
+  display: flex
+  flex-direction: row
+  align-items: center
+  flex-wrap: nowrap
+  max-height: 50px
+  margin-bottom: 5px
+
+.input
+  display: none
+  width: 133px
+  height: 20px
+  position: absolute
+  top: 17px
+  margin-left: 20px
+  padding-left: 5px
+
+.name
+  display: none
+  min-width: 140px
+  font-size: 14px
+  margin-left: 10px
+  animation: fadeIn 1.5s
+  animation-fill-mode: forwards
+
+.search
+  display: inline-block
+  height: 30px
+  width: 30px
+  margin-left: 8px
+  margin-bottom: 3px
+  background: url('../../img/search.png') no-repeat
+  background-size: contain
+  cursor: pointer
+
+.expanded
+  width: 200px
+  transition: all .3s linear
+  .name
+    display: inline-block
+  .input
+    display: inline-block
+
+@keyframes fadeIn
+  from
+    opacity: 0
+  to
+    opacity: 1
