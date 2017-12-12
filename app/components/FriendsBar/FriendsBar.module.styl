@@ -44,10 +44,8 @@
 .name
   display: none
   min-width: 140px
-  font-size: 14px
+  font-size: 13px
   margin-left: 10px
-  animation: fadeIn 1.5s
-  animation-fill-mode: forwards
 
 .search
   display: inline-block
@@ -55,9 +53,10 @@
   width: 30px
   margin-left: 8px
   margin-bottom: 3px
-  background: url('../../img/search.png') no-repeat
+  background: url('../../img/arrow.png') no-repeat
   background-size: contain
   cursor: pointer
+  transition-duration: 0.8s
 
 .expanded
   width: 200px
@@ -66,9 +65,11 @@
     display: inline-block
   .input
     display: inline-block
+  .search
+    transform: rotate(180deg)
 
-@keyframes fadeIn
-  from
-    opacity: 0
-  to
-    opacity: 1
+.empty
+  font-size: 14px
+  text-align: left
+  margin-top: 15px
+  padding-left: 10px

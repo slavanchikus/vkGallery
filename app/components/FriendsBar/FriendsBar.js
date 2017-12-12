@@ -22,12 +22,19 @@ export default class FriendsBar extends Component {
         nextState.friendsList !== this.state.friendsList;
   }
 
-  handleClick = (e) => {
+  handleFriendClick = (e) => {
     const userId = e.target.getAttribute('data-userid');
     if (userId) {
       this.props.onUserRequest(userId);
       this.props.onChangeInput(userId);
     }
+  };
+
+  handleExpandClick = () => {
+    if (this.state.expanded && this.state.friendsList.length < 1) {
+      this.setState({ expanded: false, friendsList: this.props.friends });
+    }
+    this.setState({ expanded: !this.state.expanded });
   };
 
   handleChange = (e) => {
@@ -47,8 +54,8 @@ export default class FriendsBar extends Component {
       [styles.expanded]: expanded,
     });
     return (
-      <div className={containerClassName} onClick={this.handleClick}>
-        <div className={styles.search} onClick={() => this.setState({ expanded: !this.state.expanded })} />
+      <div className={containerClassName} onClick={this.handleFriendClick}>
+        <div className={styles.search} onClick={this.handleExpandClick} />
         <input type="text" className={styles.input} onChange={this.handleChange} />
         <div>
           {friendsList && friendsList.map(item => (
@@ -64,6 +71,11 @@ export default class FriendsBar extends Component {
             </div>
             ))
             }
+          {expanded && friendsList.length < 1 &&
+            <div className={styles.empty}>
+              Таких друзей у вас нет :(
+            </div>
+          }
         </div>
       </div>
     );
