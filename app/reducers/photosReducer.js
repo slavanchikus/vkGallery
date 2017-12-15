@@ -12,9 +12,13 @@ export default function photoReducer(state = initialState, action) {
     }
     case 'PHOTOS_REQUEST_COMPLETE': {
       const { response } = action.payload;
+
       const currentUserId = state[0] ? state[0].owner_id : null;
       const responseUserId = response[0] ? response[0].owner_id : null;
-      if (currentUserId !== responseUserId) {
+      const currentAlbumId = state[0] ? state[0].aid : null;
+      const responseAlbumId = response[0] ? response[0].aid : null;
+
+      if (currentUserId !== responseUserId || currentAlbumId !== responseAlbumId) {
         return response;
       }
       return [...state, ...response];

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import SettingButtons from './SettingButtons/SettingButtons';
+import AlbumPicker from './AlbumPicker/AlbumPicker';
+
 import styles from './Settings.module.styl';
 
 export default class Settings extends Component {
@@ -12,20 +15,11 @@ export default class Settings extends Component {
     onUserRequest: PropTypes.func.isRequired,
     onSortLikes: PropTypes.func.isRequired,
     onSortComments: PropTypes.func.isRequired,
+    onPickAlbum: PropTypes.func.isRequired,
   };
 
   state = {
     disableTakeButton: false
-  };
-
-  sortLike = (e) => {
-    e.preventDefault();
-    this.props.onSortLikes();
-  };
-
-  sortComments = (e) => {
-    e.preventDefault();
-    this.props.onSortComments();
   };
 
   handleChange = (e) => {
@@ -37,26 +31,28 @@ export default class Settings extends Component {
     }
   };
 
-  handleUserRequest = () => {
-    const { onUserRequest, user, inputValue } = this.props;
-    if (user.lastInputValue !== inputValue) onUserRequest(inputValue);
-  };
-
   render() {
     const { disableTakeButton } = this.state;
-    const { user, inputValue, isPhotosEmpty } = this.props;
+    const { user, inputValue, isPhotosEmpty, onUserRequest, onSortLikes, onSortComments, onPickAlbum } = this.props;
     const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
-        <input type="submit" className={styles.input_submit} value="Взять фото" onClick={this.handleUserRequest} disabled={disableTakeButton} />
-        <input type="submit" className={styles.input_submit} value="Сортировка по лайкам" onClick={this.sortLike} disabled={isPhotosEmpty} />
-        <input type="submit" className={styles.input_submit} value="Сортировка по комментам" onClick={this.sortComments} disabled={isPhotosEmpty} />
+        <SettingButtons
+          user={user}
+          inputValue={inputValue}
+          disableTakeButton={disableTakeButton}
+          isPhotosEmpty={isPhotosEmpty}
+          onUserRequest={onUserRequest}
+          onSortLikes={onSortLikes}
+          onSortComments={onSortComments}
+        />
+        <AlbumPicker onPickAlbum={onPickAlbum} />
         {isPhotosEmpty && user.first_name &&
-        <div className={styles.error}>У существующего пользователя нет фоток :(</div> }
+        <div className={styles.error}>У существующего пользователя нет фоток в данном альбоме:(</div> }
         {user.error &&
         <div className={styles.error}>Юзера с таким ид не существует :(</div> }
-        <div className={styles.info}>Выбранный пользователь <br/> {userInfo}</div>
+        <div className={styles.info}>Выбранный пользователь <br /> {userInfo}</div>
       </div>
     );
   }

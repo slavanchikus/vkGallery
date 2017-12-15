@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments } from '../../actions/actions';
+import { tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments, pickAlbum } from '../../actions/actions';
 import { photosSelector, userSelector, friendsSelector } from '../../selector/mainSelector';
 
 import Settings from '../Settings/Settings.js';
@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments }, dispatch);
+    bindActionCreators({ tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments, pickAlbum }, dispatch);
 
 class MainContainer extends Component {
   constructor(props) {
@@ -46,7 +46,11 @@ class MainContainer extends Component {
 
   componentWillReceiveProps({ user, friends }) {
     if (this.props.user.id !== user.id && !user.error) {
-      this.props.photoRequest(user.id, 0, 50);
+      const album = user.album ? user.album : 'wall';
+      this.props.photoRequest(user.id, 0, 50, album);
+    }
+    if (this.props.user.album !== user.album && !user.error) {
+      this.props.photoRequest(this.props.user.id, 0, 50, user.album);
     }
     if (this.props.friends !== friends) {
       this.setState({ isAppReady: true });
@@ -88,6 +92,7 @@ class MainContainer extends Component {
           onUserRequest={this.handleUserRequest}
           onSortLikes={this.props.sortByLikes}
           onSortComments={this.props.sortByComments}
+          onPickAlbum={this.props.pickAlbum}
         />
         {photos.length > 0 &&
         <Photos

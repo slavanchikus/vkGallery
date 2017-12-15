@@ -56,7 +56,7 @@ export default class FriendsBar extends Component {
     return (
       <div className={containerClassName} onClick={this.handleFriendClick}>
         <div className={styles.search} onClick={this.handleExpandClick} />
-        <input type="text" className={styles.input} onChange={this.handleChange} />
+        <input type="text" placeholder="Введите имя" className={styles.input} onChange={this.handleChange} />
         <div>
           {friendsList && friendsList.map(item => (
             <div key={item.id} className={styles.friend_block}>

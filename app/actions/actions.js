@@ -12,11 +12,12 @@ export const friendsRequest = userId => ({
   userId,
 });
 
-export const photoRequest = (userId, offset, count) => ({
+export const photoRequest = (userId, offset, count, album) => ({
   type: 'PHOTOS_REQUEST',
   userId,
   offset,
   count,
+  album
 });
 
 export const sortByLikes = () => ({
@@ -25,4 +26,9 @@ export const sortByLikes = () => ({
 
 export const sortByComments = () => ({
   type: 'PHOTOS_SORT_COMMENTS',
+});
+
+export const pickAlbum = album => ({
+  type: 'PICK_ALBUM',
+  album
 });

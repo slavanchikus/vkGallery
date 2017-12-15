@@ -33,9 +33,9 @@ export function* fetchFriends({ userId }) {
   }
 }
 
-export function* fetchPhotos({ userId, offset, count }) {
+export function* fetchPhotos({ userId, offset, count, album }) {
   try {
-    const payload = yield call(getPhotos, userId, offset, count);
+    const payload = yield call(getPhotos, userId, offset, count, album);
     yield put({ type: 'PHOTOS_REQUEST_COMPLETE', payload });
   } catch (error) {
     yield put({ type: 'PHOTOS_REQUEST_ERROR' });

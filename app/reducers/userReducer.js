@@ -12,6 +12,13 @@ export default function userReducer(state = initialState, action) {
         lastInputValue: inputValue
       };
     }
+    case 'PICK_ALBUM': {
+      const { album } = action;
+      return {
+        ...state,
+        album
+      };
+    }
     default:
       break;
   }
