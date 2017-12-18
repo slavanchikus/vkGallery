@@ -13,7 +13,7 @@ export default class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photoIndex: this.props.indexOfPhoto
+      photoIndex: props.indexOfPhoto
     };
   }
 

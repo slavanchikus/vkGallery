@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import cx from 'classnames';
+
 import styles from './SettingButtons.module.styl';
 
 export default class SettingButtons extends Component {
@@ -14,13 +16,11 @@ export default class SettingButtons extends Component {
     onSortComments: PropTypes.func.isRequired,
   };
 
-  sortLike = (e) => {
-    e.preventDefault();
+  sortLike = () => {
     this.props.onSortLikes();
   };
 
-  sortComments = (e) => {
-    e.preventDefault();
+  sortComments = () => {
     this.props.onSortComments();
   };
 
@@ -31,14 +31,16 @@ export default class SettingButtons extends Component {
 
   render() {
     const { disableTakeButton, isPhotosEmpty } = this.props;
+    const containerClassNamex = cx(styles.container, {
+      [styles.empty]: isPhotosEmpty,
+    });
     return (
       <div className={styles.container}>
         <input type="submit" className={styles.input_submit} value="Взять фото" onClick={this.handleUserRequest} disabled={disableTakeButton} />
-        {!isPhotosEmpty &&
-        <div className={styles.container}>
+        <div className={containerClassNamex}>
           <div className={styles.sort_like} onClick={this.sortLike} />
           <div className={styles.sort_comment} onClick={this.sortComments} />
-        </div>}
+        </div>
       </div>
     );
   }

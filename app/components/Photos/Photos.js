@@ -27,17 +27,16 @@ export default class Photos extends Component {
       <div>
         <div className={styles.container} onScroll={this.handleScroll} ref={node => (this.container = node)}>
           {user && user.first_name && photos && photos.map((pic, index) =>
-            <div
-              id={index}
-              key={pic.pid}
-              className={styles.img}
-              onClick={() => this.props.onPhotoClick(index)}
-              style={{ backgroundImage: `url(${pic.src})` }}
-            >
+            <div className={styles.img} key={pic.pid}>
               <div className={styles.panel}>
                 <div className={styles.like} /><span className={styles.count}>{pic.likes.count}</span>
                 <div className={styles.comment} /><span className={styles.count}>{pic.comments.count}</span>
               </div>
+              <img
+                id={index}
+                onClick={() => this.props.onPhotoClick(index)}
+                src={pic.src}
+              />
             </div>)}
         </div>
       </div>
