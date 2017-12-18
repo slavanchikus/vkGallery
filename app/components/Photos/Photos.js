@@ -17,7 +17,7 @@ export default class Photos extends Component {
 
   handleScroll = () => {
     if ((this.container.scrollHeight - this.container.scrollTop === this.container.clientHeight) && this.props.photos.length % 50 === 0) {
-      this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50, 'wall', this.props.selectedAlbumId);
+      this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50, this.props.selectedAlbumId);
     }
   };
 
