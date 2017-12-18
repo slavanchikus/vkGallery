@@ -27,6 +27,7 @@ export default class FriendsBar extends Component {
     if (userId) {
       this.props.onUserRequest(userId);
       this.props.onChangeInput(userId);
+      this.setState({ expanded: false, friendsList: this.props.friends });
     }
   };
 
