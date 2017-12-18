@@ -6,7 +6,6 @@ import styles from './Photos.module.styl';
 export default class Photos extends Component {
   static propTypes = {
     photos: PropTypes.array.isRequired,
-    settings: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     onPhotoClick: PropTypes.func.isRequired,
     onPhotoRequest: PropTypes.func.isRequired,
@@ -18,7 +17,7 @@ export default class Photos extends Component {
 
   handleScroll = () => {
     if ((this.container.scrollHeight - this.container.scrollTop === this.container.clientHeight) && this.props.photos.length % 50 === 0) {
-      this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50, 'wall', this.props.settings.album);
+      this.props.onPhotoRequest(this.props.user.id, this.props.photos.length, 50, 'wall', this.props.selectedAlbumId);
     }
   };
 

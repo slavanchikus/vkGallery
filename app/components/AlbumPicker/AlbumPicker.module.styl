@@ -1,7 +1,16 @@
 .container
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
   position: relative
+  font-size: 12.5px
+  line-height: 15px
+  width: 335px
+  padding: 0 15px
 
 .picker
+  width: 140px
   height: 30px
   display: flex
   flex-direction: row
@@ -15,10 +24,20 @@
   cursor: pointer
   user-select: none
 
+.info
+  display: inline-block
+  font-size: 11px
+  text-align: center
+  text-transform: capitalize
+  max-width: 110px
+  max-height: 45px
+  overflow: hidden
+
 .options
-  width: 100%
+  width: 140px
   position: absolute
   top: 29px
+  right: 15px
   display: flex
   flex-direction: column
   z-index: 1
@@ -35,15 +54,10 @@
     border-bottom: 1px solid #5e81a8
     cursor: pointer
     user-select: none
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
   div:last-child
     border-bottom: 0
   .selected
-    &::after
-      content: "\2714"
-      font-weight: 400
-      color: #5e81a8
-      display: block
-      position: absolute
-      right: 12px
-      top: 0
-      font-size: 16px
+    background: #deebfa

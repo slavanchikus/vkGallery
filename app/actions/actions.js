@@ -20,6 +20,12 @@ export const photoRequest = (userId, offset, count, album) => ({
   album
 });
 
+export const albumRequest = userId => ({
+  type: 'ALBUM_REQUEST',
+  userId
+});
+
+
 export const sortByLikes = () => ({
   type: 'PHOTOS_SORT_LIKES',
 });
@@ -28,7 +34,8 @@ export const sortByComments = () => ({
   type: 'PHOTOS_SORT_COMMENTS',
 });
 
-export const pickAlbum = album => ({
+export const pickAlbum = (albumId, albumName) => ({
   type: 'PICK_ALBUM',
-  album
+  albumId,
+  albumName
 });

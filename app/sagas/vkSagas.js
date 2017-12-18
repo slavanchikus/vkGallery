@@ -1,5 +1,5 @@
 import { fork, call, put, takeEvery } from 'redux-saga/effects';
-import { getPhotos, getUser, getFreinds } from '../api/vkApi';
+import { getPhotos, getUser, getFreinds, getAlbums } from '../api/vkApi';
 
 /* client id = 6285810 */
 
@@ -43,9 +43,20 @@ export function* fetchPhotos({ userId, offset, count, album }) {
   }
 }
 
+export function* fetchAlbums({ userId }) {
+  try {
+    const payload = yield call(getAlbums, userId);
+    yield put({ type: 'ALBUM_REQUEST_COMPLETE', payload });
+  } catch (error) {
+    yield put({ type: 'ALBUM_REQUEST_ERROR' });
+    throw error;
+  }
+}
+
 export function* watchVkRequest() {
   yield takeEvery('USER_REQUEST', fetchUser);
   yield takeEvery('PHOTOS_REQUEST', fetchPhotos);
+  yield takeEvery('ALBUM_REQUEST', fetchAlbums);
   yield takeEvery('FRIENDS_REQUEST', fetchFriends);
   yield takeEvery('TOKEN_REQUEST', fetchAccessToken);
 }

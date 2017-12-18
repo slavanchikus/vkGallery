@@ -2,21 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SettingButtons from './SettingButtons/SettingButtons';
-import AlbumPicker from './AlbumPicker/AlbumPicker';
 
 import styles from './Settings.module.styl';
 
 export default class Settings extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
     inputValue: PropTypes.string.isRequired,
     isPhotosEmpty: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onUserRequest: PropTypes.func.isRequired,
     onSortLikes: PropTypes.func.isRequired,
     onSortComments: PropTypes.func.isRequired,
-    onPickAlbum: PropTypes.func.isRequired,
   };
 
   state = {
@@ -34,13 +31,13 @@ export default class Settings extends Component {
 
   render() {
     const { disableTakeButton } = this.state;
-    const { user, settings, inputValue, isPhotosEmpty, onUserRequest, onSortLikes, onSortComments, onPickAlbum } = this.props;
+    const { user, inputValue, isPhotosEmpty, onUserRequest, onSortLikes, onSortComments } = this.props;
     const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
         <SettingButtons
-          settings={settings}
+          user={user}
           inputValue={inputValue}
           disableTakeButton={disableTakeButton}
           isPhotosEmpty={isPhotosEmpty}
@@ -48,12 +45,11 @@ export default class Settings extends Component {
           onSortLikes={onSortLikes}
           onSortComments={onSortComments}
         />
-        <AlbumPicker onPickAlbum={onPickAlbum} selectedAlbum={settings.album} />
         {isPhotosEmpty && user.first_name &&
         <div className={styles.error}>У существующего пользователя нет фоток в данном альбоме:(</div> }
         {user.error &&
         <div className={styles.error}>Юзера с таким ид не существует :(</div> }
-        <div className={styles.info}>Выбранный пользователь <br /> {userInfo}</div>
+        <div className={styles.info}>Выбранный пользователь:<br />{userInfo}</div>
       </div>
     );
   }
