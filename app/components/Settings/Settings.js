@@ -9,6 +9,7 @@ import styles from './Settings.module.styl';
 export default class Settings extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
     inputValue: PropTypes.string.isRequired,
     isPhotosEmpty: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
@@ -33,13 +34,13 @@ export default class Settings extends Component {
 
   render() {
     const { disableTakeButton } = this.state;
-    const { user, inputValue, isPhotosEmpty, onUserRequest, onSortLikes, onSortComments, onPickAlbum } = this.props;
+    const { user, settings, inputValue, isPhotosEmpty, onUserRequest, onSortLikes, onSortComments, onPickAlbum } = this.props;
     const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
         <SettingButtons
-          user={user}
+          settings={settings}
           inputValue={inputValue}
           disableTakeButton={disableTakeButton}
           isPhotosEmpty={isPhotosEmpty}
@@ -47,7 +48,7 @@ export default class Settings extends Component {
           onSortLikes={onSortLikes}
           onSortComments={onSortComments}
         />
-        <AlbumPicker onPickAlbum={onPickAlbum} />
+        <AlbumPicker onPickAlbum={onPickAlbum} selectedAlbum={settings.album} />
         {isPhotosEmpty && user.first_name &&
         <div className={styles.error}>У существующего пользователя нет фоток в данном альбоме:(</div> }
         {user.error &&

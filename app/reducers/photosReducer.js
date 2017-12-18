@@ -11,7 +11,11 @@ export default function photoReducer(state = initialState, action) {
       return state;
     }
     case 'PHOTOS_REQUEST_COMPLETE': {
-      const { response } = action.payload;
+      const { response, error } = action.payload;
+
+      if (error) {
+        return initialState;
+      }
 
       const currentUserId = state[0] ? state[0].owner_id : null;
       const responseUserId = response[0] ? response[0].owner_id : null;

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments, pickAlbum } from '../../actions/actions';
-import { photosSelector, userSelector, friendsSelector } from '../../selector/mainSelector';
+import { photosSelector, userSelector, friendsSelector, settingsSelector } from '../../selector/mainSelector';
 
 import Settings from '../Settings/Settings.js';
 import Photos from '../Photos/Photos.js';
@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
   photos: photosSelector(state),
   user: userSelector(state),
   friends: friendsSelector(state),
+  settings: settingsSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
@@ -44,13 +45,12 @@ class MainContainer extends Component {
     setTimeout(() => this.props.friendsRequest(inputValue), 1000);
   }
 
-  componentWillReceiveProps({ user, friends }) {
+  componentWillReceiveProps({ user, friends, settings }) {
     if (this.props.user.id !== user.id && !user.error) {
-      const album = user.album ? user.album : 'wall';
-      this.props.photoRequest(user.id, 0, 50, album);
+      this.props.photoRequest(user.id, 0, 50, this.props.settings.album);
     }
-    if (this.props.user.album !== user.album && !user.error) {
-      this.props.photoRequest(this.props.user.id, 0, 50, user.album);
+    if (this.props.settings.album !== settings.album && !user.error) {
+      this.props.photoRequest(this.props.user.id, 0, 50, settings.album);
     }
     if (this.props.friends !== friends) {
       this.setState({ isAppReady: true });
@@ -76,7 +76,7 @@ class MainContainer extends Component {
 
   render() {
     const { isAppReady, inputValue, indexOfPhoto, isGalleryVisible } = this.state;
-    const { photos, user, friends } = this.props;
+    const { photos, user, friends, settings } = this.props;
     if (!isAppReady) {
       return (
         <div className={styles.spinner} />
@@ -86,6 +86,7 @@ class MainContainer extends Component {
       <div className={styles.container}>
         <Settings
           user={user}
+          settings={settings}
           inputValue={inputValue}
           isPhotosEmpty={photos.length < 1}
           onChange={this.handleInputValue}
@@ -97,6 +98,7 @@ class MainContainer extends Component {
         {photos.length > 0 &&
         <Photos
           user={user}
+          settings={settings}
           photos={photos}
           onPhotoClick={this.handlePhotoClick}
           onPhotoRequest={this.props.photoRequest}
