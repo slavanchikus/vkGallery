@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { tokenRequest, userRequest, photoRequest, friendsRequest, sortByLikes, sortByComments, pickAlbum, albumRequest } from '../../actions/actions';
-import { photosSelector, albumsSelector, userSelector, friendsSelector } from '../../selector/mainSelector';
+import { photosSelector, albumsSelector, userSelector, friendsSelector, uiStateSelector } from '../../selector/mainSelector';
 
 import Settings from '../Settings/Settings.js';
 import Photos from '../Photos/Photos.js';
@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   albums: albumsSelector(state),
   user: userSelector(state),
   friends: friendsSelector(state),
+  uiState: uiStateSelector(state)
 });
 
 const mapDispatchToProps = dispatch =>
@@ -34,6 +35,7 @@ class MainContainer extends Component {
       inputValue: '',
       isGalleryVisible: false,
       indexOfPhoto: 0,
+      showSpinner: true,
     };
   }
 
@@ -46,7 +48,7 @@ class MainContainer extends Component {
     setTimeout(() => this.props.friendsRequest(inputValue), 1000);
   }
 
-  componentWillReceiveProps({ user, friends, albums }) {
+  componentWillReceiveProps({ user, friends, albums, uiState }) {
     if (this.props.user.id !== user.id && !user.error) {
       this.props.photoRequest(user.id, 0, 50, this.props.albums.selectedAlbumId);
     }
@@ -55,6 +57,13 @@ class MainContainer extends Component {
     }
     if (this.props.friends !== friends) {
       this.setState({ isAppReady: true });
+    }
+    if (!uiState.isFetching && this.props.uiState.isFetching) {
+      clearTimeout(this.loader);
+      if (this.state.showSpinner) this.setState({ showSpinner: false });
+    }
+    if (uiState.isFetching && !this.props.uiState.isFetching) {
+      this.loader = setTimeout(() => this.setState({ showSpinner: true }), 1000);
     }
   }
 
@@ -76,8 +85,8 @@ class MainContainer extends Component {
   };
 
   render() {
-    const { isAppReady, inputValue, indexOfPhoto, isGalleryVisible } = this.state;
-    const { photos, user, friends, albums } = this.props;
+    const { isAppReady, inputValue, indexOfPhoto, isGalleryVisible, showSpinner } = this.state;
+    const { photos, user, friends, albums, uiState } = this.props;
     if (!isAppReady) {
       return (
         <div className={styles.spinner} />
@@ -95,6 +104,7 @@ class MainContainer extends Component {
             onSortLikes={this.props.sortByLikes}
             onSortComments={this.props.sortByComments}
           />
+          {showSpinner && <div className={styles.loader} />}
           <AlbumPicker
             userId={user.id}
             albums={albums}
@@ -106,6 +116,7 @@ class MainContainer extends Component {
         <Photos
           user={user}
           photos={photos}
+          isFetching={uiState.isFetching}
           selectedAlbumId={albums.selectedAlbumId}
           onPhotoClick={this.handlePhotoClick}
           onPhotoRequest={this.props.photoRequest}
@@ -123,8 +134,7 @@ class MainContainer extends Component {
           friends={friends}
           onUserRequest={this.props.userRequest}
           onChangeInput={this.handleInputValue}
-        />
-        }
+        />}
       </div>
     );
   }
