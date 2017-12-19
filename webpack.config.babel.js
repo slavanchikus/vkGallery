@@ -69,6 +69,7 @@ export default () => ({
     }),
   ],
   devServer: {
+    port: 8081,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',

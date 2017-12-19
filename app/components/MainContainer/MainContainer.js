@@ -41,8 +41,8 @@ class MainContainer extends Component {
 
   componentDidMount() {
     const accessToken = localStorage.getItem('access_token_vkGallery') || getAccessToken();
-    const inputValue = localStorage.getItem('user_id_vkGallery');
     if (!accessToken) this.props.tokenRequest();
+    const inputValue = localStorage.getItem('user_id_vkGallery');
     this.props.userRequest(inputValue);
     this.handleInputValue(inputValue);
     setTimeout(() => this.props.friendsRequest(inputValue), 1000);
@@ -80,7 +80,7 @@ class MainContainer extends Component {
     this.setState({ inputValue: id });
   };
 
-  toggleExpandState = () => {
+  toggleGalleryState = () => {
     this.setState({ isGalleryVisible: !this.state.isGalleryVisible });
   };
 
@@ -126,7 +126,7 @@ class MainContainer extends Component {
         <Gallery
           indexOfPhoto={indexOfPhoto}
           photos={photos}
-          closeGallery={this.toggleExpandState}
+          closeGallery={this.toggleGalleryState}
         />
         }
         {friends.length > 0 &&
