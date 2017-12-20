@@ -1,11 +1,9 @@
 import { fork, call, put, takeEvery } from 'redux-saga/effects';
-import { getUser } from '../api/instaApi';
-
-/* client id = 6285810 */
+import { getPhotos } from '../api/instaApi';
 
 export function* fetchUser({ inputValue }) {
   try {
-    const userPayload = yield call(getUser, inputValue);
+    const userPayload = yield call(getPhotos, inputValue);
     const payload = { ...userPayload, inputValue };
     yield put({ type: 'USER_REQUEST_COMPLETE', payload });
   } catch (error) {

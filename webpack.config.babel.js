@@ -70,6 +70,7 @@ export default () => ({
   ],
   devServer: {
     port: 8081,
+    historyApiFallback: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',

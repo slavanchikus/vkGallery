@@ -7,13 +7,9 @@ import styles from './Settings.module.styl';
 
 export default class Settings extends Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
     inputValue: PropTypes.string.isRequired,
-    isPhotosEmpty: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onUserRequest: PropTypes.func.isRequired,
-    onSortLikes: PropTypes.func.isRequired,
-    onSortComments: PropTypes.func.isRequired,
   };
 
   state = {
@@ -31,25 +27,15 @@ export default class Settings extends Component {
 
   render() {
     const { disableTakeButton } = this.state;
-    const { user, inputValue, isPhotosEmpty, onUserRequest, onSortLikes, onSortComments } = this.props;
-    const userInfo = user && user.first_name ? `${user.first_name} ${user.last_name}` : 'Не выбран';
+    const { inputValue, onUserRequest } = this.props;
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
         <SettingButtons
-          user={user}
           inputValue={inputValue}
-          disableTakeButton={disableTakeButton}
-          isPhotosEmpty={isPhotosEmpty}
           onUserRequest={onUserRequest}
-          onSortLikes={onSortLikes}
-          onSortComments={onSortComments}
+          disableTakeButton={disableTakeButton}
         />
-        {isPhotosEmpty && user.first_name &&
-        <div className={styles.error}>У существующего пользователя нет фоток в данном альбоме:(</div> }
-        {user.error &&
-        <div className={styles.error}>Юзера с таким ид не существует :(</div> }
-        <div className={styles.info}>Выбранный пользователь:<br />{userInfo}</div>
       </div>
     );
   }

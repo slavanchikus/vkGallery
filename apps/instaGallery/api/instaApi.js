@@ -1,6 +1,4 @@
-import fetchJsonp from 'fetch-jsonp';
-
-export const getUser = userId => fetchJsonp(`https://api.vk.com/method/users.get?user_ids=${userId}&fields=bdate&v=5.67`)
+export const getPhotos = userName => fetch(`https://www.instagram.com/${userName}/?__a=1`)
     .then(response => response.json())
     .catch((error) => {
       throw error;
