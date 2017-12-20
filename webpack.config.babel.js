@@ -3,7 +3,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default () => ({
   entry: {
-    app: ['babel-polyfill', './app/index.js']
+    apps: ['babel-polyfill', './apps/index.js']
   },
   output: {
     path: path.resolve(__dirname, 'build/assets'),
