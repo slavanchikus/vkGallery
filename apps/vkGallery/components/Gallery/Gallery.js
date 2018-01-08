@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { unixstampConverter } from '../../utils/convertUnixstamp';
+
 import styles from './Gallery.module.styl';
 
 export default class Gallery extends Component {
@@ -84,6 +86,13 @@ export default class Gallery extends Component {
               src={photos[photoIndex].src_big}
               alt={photos[photoIndex].text}
             />
+            <div className={styles.info}>
+              {`Дата публикации: ${unixstampConverter(photos[photoIndex].created)}`}
+              <div className={styles.like_block}>
+                <div className={styles.like} />
+                {photos[photoIndex].likes.count}
+              </div>
+            </div>
           </div>
         </div>
       </div>
