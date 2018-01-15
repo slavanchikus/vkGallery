@@ -7,7 +7,7 @@ import styles from './AlbumPicker.module.styl';
 
 export default class AlbumPicker extends Component {
   static propTypes = {
-    userId: PropTypes.number.isRequired,
+    user: PropTypes.object.isRequired,
     albums: PropTypes.object.isRequired,
     onAlbumRequest: PropTypes.func.isRequired,
     onPickAlbum: PropTypes.func.isRequired,
@@ -18,12 +18,12 @@ export default class AlbumPicker extends Component {
   };
 
   componentDidMount() {
-    this.props.onAlbumRequest(this.props.userId);
+    this.props.onAlbumRequest(this.props.user.id);
   }
 
-  componentWillReceiveProps({ userId }) {
-    if (this.props.userId !== userId) {
-      this.props.onAlbumRequest(userId);
+  componentWillReceiveProps({ user }) {
+    if (this.props.user.id !== user.id) {
+      this.props.onAlbumRequest(user.id);
     }
   }
 
@@ -53,13 +53,13 @@ export default class AlbumPicker extends Component {
 
   render() {
     const { expanded } = this.state;
-    const { albums } = this.props;
+    const { albums, user } = this.props;
     return (
       <div className={styles.container}>
         <div className={styles.info}>
           Выбранный альбом:<br />{albums.selectedAlbumName}
         </div>
-        <div className={styles.picker} onClick={() => this.setState({ expanded: !this.state.expanded })}>
+        <div className={styles.picker} onClick={() => { if (!user.error) this.setState({ expanded: !this.state.expanded }); }}>
           Выберите альбом
         </div>
         {expanded &&

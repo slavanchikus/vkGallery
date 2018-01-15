@@ -7,7 +7,7 @@ export default function userReducer(state = initialState, action) {
       return user;
     }
     case 'USER_REQUEST_ERROR': {
-      return { error: true };
+      return { ...initialState, error: true };
     }
     default:
       break;

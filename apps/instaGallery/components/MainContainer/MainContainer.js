@@ -48,12 +48,13 @@ class MainContainer extends Component {
 
   render() {
     const { inputValue, showSpinner } = this.state;
-    const { photos } = this.props;
+    const { photos, user } = this.props;
     return (
       <div className={styles.container}>
         <div className={styles.header}>
           <Settings
             inputValue={inputValue}
+            user={user}
             showSpinner={showSpinner}
             onChange={this.handleInputValue}
             onUserRequest={this.handleUserRequest}

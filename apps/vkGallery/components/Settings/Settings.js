@@ -37,7 +37,6 @@ export default class Settings extends Component {
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
         <SettingButtons
-          user={user}
           inputValue={inputValue}
           disableTakeButton={disableTakeButton}
           isPhotosEmpty={isPhotosEmpty}

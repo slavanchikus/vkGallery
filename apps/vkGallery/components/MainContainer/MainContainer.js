@@ -72,7 +72,9 @@ class MainContainer extends Component {
   }
 
   handleUserRequest = () => {
-    this.props.userRequest(this.state.inputValue);
+    if (this.props.user.lastInputValue !== this.state.inputValue) {
+      this.props.userRequest(this.state.inputValue);
+    }
   };
 
   handlePhotoClick= (index) => {
@@ -110,7 +112,7 @@ class MainContainer extends Component {
           />
           {showSpinner && <div className={styles.loader} />}
           <AlbumPicker
-            userId={user.id}
+            user={user}
             albums={albums}
             onAlbumRequest={this.props.albumRequest}
             onPickAlbum={this.props.pickAlbum}

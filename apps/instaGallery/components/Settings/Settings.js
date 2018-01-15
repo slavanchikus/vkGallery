@@ -8,6 +8,7 @@ import styles from './Settings.module.styl';
 export default class Settings extends Component {
   static propTypes = {
     inputValue: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
     showSpinner: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
     onUserRequest: PropTypes.func.isRequired,
@@ -30,7 +31,7 @@ export default class Settings extends Component {
 
   render() {
     const { disableTakeButton } = this.state;
-    const { inputValue, showSpinner, onUserRequest, onSortLikes, onSortComments } = this.props;
+    const { user, inputValue, showSpinner, onUserRequest, onSortLikes, onSortComments } = this.props;
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
@@ -42,6 +43,20 @@ export default class Settings extends Component {
           onSortLikes={onSortLikes}
           onSortComments={onSortComments}
         />
+        {user.username && user.media.count === 0 &&
+          <div className={styles.error}>У существующего пользователя нет фоток :(</div>}
+        {user.error &&
+          <div className={styles.error}>Юзера с таким ид не существует :(</div>}
+        {user.username && user.media.count > 0 && !user.error &&
+          <div className={styles.info_block}>
+            <div className={styles.info}>Публикации: {user.media.count}</div>
+            <div className={styles.info}>
+                Подписки: {user.follows.count}
+              <br />
+                Подписчики: {user.followed_by.count}
+            </div>
+            <div className={styles.info}>Выбранный пользователь:<br />{user.full_name || user.username}</div>
+          </div>}
       </div>
     );
   }

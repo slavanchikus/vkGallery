@@ -7,7 +7,6 @@ import styles from './SettingButtons.module.styl';
 
 export default class SettingButtons extends Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
     inputValue: PropTypes.string.isRequired,
     disableTakeButton: PropTypes.bool.isRequired,
     isPhotosEmpty: PropTypes.bool.isRequired,
@@ -25,8 +24,8 @@ export default class SettingButtons extends Component {
   };
 
   handleUserRequest = () => {
-    const { onUserRequest, user, inputValue } = this.props;
-    if (user.lastInputValue !== inputValue) onUserRequest(inputValue);
+    const { onUserRequest, inputValue } = this.props;
+    onUserRequest(inputValue);
   };
 
   render() {
