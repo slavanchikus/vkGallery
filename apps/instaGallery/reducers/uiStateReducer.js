@@ -9,6 +9,7 @@ export default function uiStateReducer(state = initialState, action) {
         isFetching: true
       };
     }
+    case 'USER_REQUEST_ERROR':
     case 'ALL_PHOTOS_REQUEST_COMPLETE': {
       return {
         isFetching: false

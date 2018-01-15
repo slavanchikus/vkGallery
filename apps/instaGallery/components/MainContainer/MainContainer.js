@@ -32,12 +32,14 @@ class MainContainer extends Component {
       if (this.state.showSpinner) this.setState({ showSpinner: false });
     }
     if (uiState.isFetching && !this.props.uiState.isFetching) {
-      this.loader = setTimeout(() => this.setState({ showSpinner: true }), 100);
+      this.loader = setTimeout(() => this.setState({ showSpinner: true }), 400);
     }
   }
 
   handleUserRequest = (name) => {
-    this.props.userRequest(name);
+    if (this.props.user.username !== this.state.inputValue) {
+      this.props.userRequest(name);
+    }
   };
 
   handleInputValue = (id) => {
@@ -46,13 +48,13 @@ class MainContainer extends Component {
 
   render() {
     const { inputValue, showSpinner } = this.state;
-    const { photos, uiState } = this.props;
+    const { photos } = this.props;
     return (
       <div className={styles.container}>
         <div className={styles.header}>
           <Settings
             inputValue={inputValue}
-            uiState={uiState}
+            showSpinner={showSpinner}
             onChange={this.handleInputValue}
             onUserRequest={this.handleUserRequest}
             onSortLikes={this.props.sortByLikes}

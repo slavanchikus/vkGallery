@@ -6,6 +6,9 @@ export default function userReducer(state = initialState, action) {
       const { user } = action.payload;
       return user;
     }
+    case 'USER_REQUEST_ERROR': {
+      return { error: true };
+    }
     default:
       break;
   }

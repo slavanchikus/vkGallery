@@ -36,7 +36,6 @@ export function* fetchUser({ inputValue }) {
     }
   } catch (error) {
     yield put({ type: 'USER_REQUEST_ERROR' });
-    throw error;
   }
 }
 

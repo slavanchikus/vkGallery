@@ -8,6 +8,10 @@ export default class Photos extends Component {
     photos: PropTypes.array.isRequired,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.photos !== this.props.photos;
+  }
+
   render() {
     const { photos } = this.props;
     return (

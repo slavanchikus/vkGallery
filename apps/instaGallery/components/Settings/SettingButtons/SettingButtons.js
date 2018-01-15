@@ -9,7 +9,7 @@ export default class SettingButtons extends Component {
   static propTypes = {
     inputValue: PropTypes.string.isRequired,
     disableTakeButton: PropTypes.bool.isRequired,
-    uiState: PropTypes.object.isRequired,
+    showSpinner: PropTypes.bool.isRequired,
     onUserRequest: PropTypes.func.isRequired,
     onSortLikes: PropTypes.func.isRequired,
     onSortComments: PropTypes.func.isRequired,
@@ -29,9 +29,9 @@ export default class SettingButtons extends Component {
   };
 
   render() {
-    const { disableTakeButton, uiState } = this.props;
+    const { disableTakeButton, showSpinner } = this.props;
     const containerClassName = cx(styles.container, {
-      [styles.empty]: uiState.isFetching,
+      [styles.empty]: showSpinner,
     });
     return (
       <div className={styles.container}>

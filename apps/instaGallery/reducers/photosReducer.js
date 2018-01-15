@@ -14,6 +14,10 @@ export default function userReducer(state = initialState, action) {
       const currentState = [...state];
       return currentState && currentState.sort((a, b) => b.comments.count - a.comments.count);
     }
+    case 'USER_REQUEST_COMPLETE':
+    case 'USER_REQUEST_ERROR': {
+      return initialState;
+    }
     default:
       break;
   }
