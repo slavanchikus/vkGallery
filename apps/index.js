@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import { vkGallery } from './vkGallery/index';
 import { instaGallery } from './instaGallery/index';
-import StartPoint from './HomePage/StartPoint/StartPoint';
+import StartPoint from './homePage/components/StartPoint/StartPoint';
 
 export class App extends Component {
   render() {

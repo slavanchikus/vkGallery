@@ -8,8 +8,11 @@ import styles from './Settings.module.styl';
 export default class Settings extends Component {
   static propTypes = {
     inputValue: PropTypes.string.isRequired,
+    uiState: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     onUserRequest: PropTypes.func.isRequired,
+    onSortLikes: PropTypes.func.isRequired,
+    onSortComments: PropTypes.func.isRequired,
   };
 
   state = {
@@ -27,14 +30,17 @@ export default class Settings extends Component {
 
   render() {
     const { disableTakeButton } = this.state;
-    const { inputValue, onUserRequest } = this.props;
+    const { inputValue, uiState, onUserRequest, onSortLikes, onSortComments } = this.props;
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
         <SettingButtons
           inputValue={inputValue}
-          onUserRequest={onUserRequest}
           disableTakeButton={disableTakeButton}
+          uiState={uiState}
+          onUserRequest={onUserRequest}
+          onSortLikes={onSortLikes}
+          onSortComments={onSortComments}
         />
       </div>
     );

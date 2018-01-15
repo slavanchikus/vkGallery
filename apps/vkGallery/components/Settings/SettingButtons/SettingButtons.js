@@ -31,13 +31,13 @@ export default class SettingButtons extends Component {
 
   render() {
     const { disableTakeButton, isPhotosEmpty } = this.props;
-    const containerClassNamex = cx(styles.container, {
+    const containerClassName = cx(styles.container, {
       [styles.empty]: isPhotosEmpty,
     });
     return (
       <div className={styles.container}>
         <input type="submit" className={styles.input_submit} value="Взять фото" onClick={this.handleUserRequest} disabled={disableTakeButton} />
-        <div className={containerClassNamex}>
+        <div className={containerClassName}>
           <div className={styles.sort_like} onClick={this.sortLike} />
           <div className={styles.sort_comment} onClick={this.sortComments} />
         </div>

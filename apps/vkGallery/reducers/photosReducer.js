@@ -29,13 +29,11 @@ export default function photoReducer(state = initialState, action) {
     }
     case 'PHOTOS_SORT_LIKES': {
       const currentState = [...state];
-      const sortedState = currentState && currentState.sort((a, b) => b.likes.count - a.likes.count);
-      return [...sortedState];
+      return currentState && currentState.sort((a, b) => b.likes.count - a.likes.count);
     }
     case 'PHOTOS_SORT_COMMENTS': {
       const currentState = [...state];
-      const sortedState = currentState && currentState.sort((a, b) => b.comments.count - a.comments.count);
-      return [...sortedState];
+      return currentState && currentState.sort((a, b) => b.comments.count - a.comments.count);
     }
     default:
       break;
