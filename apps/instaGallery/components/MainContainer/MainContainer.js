@@ -28,8 +28,8 @@ class MainContainer extends Component {
 
   componentWillReceiveProps({ uiState }) {
     if (!uiState.isFetching && this.props.uiState.isFetching) {
-      clearTimeout(this.loader);
-      if (this.state.showSpinner) this.setState({ showSpinner: false });
+      /*clearTimeout(this.loader);
+      if (this.state.showSpinner) this.setState({ showSpinner: false });*/
     }
     if (uiState.isFetching && !this.props.uiState.isFetching) {
       this.loader = setTimeout(() => this.setState({ showSpinner: true }), 400);
@@ -56,12 +56,12 @@ class MainContainer extends Component {
             inputValue={inputValue}
             user={user}
             showSpinner={showSpinner}
+            photosLen={photos.length}
             onChange={this.handleInputValue}
             onUserRequest={this.handleUserRequest}
             onSortLikes={this.props.sortByLikes}
             onSortComments={this.props.sortByComments}
           />
-          {showSpinner && <div className={styles.loader} />}
         </div>
         {photos.length > 0 &&
           <Photos

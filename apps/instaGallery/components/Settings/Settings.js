@@ -10,6 +10,7 @@ export default class Settings extends Component {
     inputValue: PropTypes.string.isRequired,
     user: PropTypes.object.isRequired,
     showSpinner: PropTypes.bool.isRequired,
+    photosLen: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onUserRequest: PropTypes.func.isRequired,
     onSortLikes: PropTypes.func.isRequired,
@@ -31,7 +32,7 @@ export default class Settings extends Component {
 
   render() {
     const { disableTakeButton } = this.state;
-    const { user, inputValue, showSpinner, onUserRequest, onSortLikes, onSortComments } = this.props;
+    const { user, inputValue, showSpinner, photosLen, onUserRequest, onSortLikes, onSortComments } = this.props;
     return (
       <div className={styles.container}>
         <input type="text" className={styles.input_text} placeholder="Укажите ID" value={inputValue} onChange={this.handleChange} />
@@ -43,6 +44,13 @@ export default class Settings extends Component {
           onSortLikes={onSortLikes}
           onSortComments={onSortComments}
         />
+        {showSpinner && !user.error &&
+          <div className={styles.load_container}>
+            <div className={styles.spinner_container}>
+              <div className={styles.spinner} />
+            </div>
+            <div className={styles.loadbar}>{photosLen} загружено из {user.media.count}</div>
+          </div>}
         {user.username && user.media.count === 0 &&
           <div className={styles.error}>У существующего пользователя нет фоток :(</div>}
         {user.error &&

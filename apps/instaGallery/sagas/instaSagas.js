@@ -1,4 +1,5 @@
 import { fork, call, put, takeEvery } from 'redux-saga/effects';
+import { delay } from 'redux-saga';
 import { getUser, getPhotos } from '../api/instaApi';
 
 export function* fetchUser({ inputValue }) {
@@ -25,6 +26,7 @@ export function* fetchUser({ inputValue }) {
         const currentEndCursor = currentPayload.user.media.page_info.end_cursor;
         if (currentEndCursor) {
           nextEndCursor = currentEndCursor;
+          yield delay(200);
           yield put({ type: 'PHOTOS_REQUEST_COMPLETE', photos });
         } else {
           nextEndCursor = null;
