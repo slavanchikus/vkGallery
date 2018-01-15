@@ -10,7 +10,7 @@ export default class Settings extends Component {
     inputValue: PropTypes.string.isRequired,
     user: PropTypes.object.isRequired,
     showSpinner: PropTypes.bool.isRequired,
-    photosLen: PropTypes.string.isRequired,
+    photosLen: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     onUserRequest: PropTypes.func.isRequired,
     onSortLikes: PropTypes.func.isRequired,
@@ -44,7 +44,7 @@ export default class Settings extends Component {
           onSortLikes={onSortLikes}
           onSortComments={onSortComments}
         />
-        {showSpinner && !user.error &&
+        {showSpinner && user.media && !user.error &&
           <div className={styles.load_container}>
             <div className={styles.spinner_container}>
               <div className={styles.spinner} />
@@ -53,11 +53,13 @@ export default class Settings extends Component {
           </div>}
         {user.username && user.media.count === 0 &&
           <div className={styles.error}>У существующего пользователя нет фоток :(</div>}
+        {user.username && user.is_private &&
+          <div className={styles.error}>Данный аккаунт является приватным :(</div>}
         {user.error &&
           <div className={styles.error}>Юзера с таким ид не существует :(</div>}
         {user.username && user.media.count > 0 && !user.error &&
           <div className={styles.info_block}>
-            <div className={styles.info}>Публикации: {user.media.count}</div>
+            {!showSpinner && <div className={styles.info}>Публикации: {user.media.count}</div>}
             <div className={styles.info}>
                 Подписки: {user.follows.count}
               <br />

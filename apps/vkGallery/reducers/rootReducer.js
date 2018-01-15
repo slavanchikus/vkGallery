@@ -19,7 +19,10 @@ const rootReducer = (state, action) => {
     const initialState = {
       user: {},
       photos: [],
-      albums: {},
+      albums: {
+        selectedAlbumId: 'wall',
+        selectedAlbumName: 'стена'
+      },
       friends: [],
       uiState: {}
     };

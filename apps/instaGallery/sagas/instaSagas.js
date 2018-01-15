@@ -10,7 +10,7 @@ export function* fetchUser({ inputValue }) {
     yield put({ type: 'USER_REQUEST_COMPLETE', payload });
     yield put({ type: 'PHOTOS_REQUEST_COMPLETE', photos });
 
-    if (payload.user.media.page_info.has_next_page) {
+    if (payload.user.media.page_info.has_next_page && !payload.user.is_private) {
       const firstEndCursor = payload.user.media.page_info.end_cursor;
 
       const nextPayload = yield call(getPhotos, inputValue, firstEndCursor);
@@ -26,7 +26,7 @@ export function* fetchUser({ inputValue }) {
         const currentEndCursor = currentPayload.user.media.page_info.end_cursor;
         if (currentEndCursor) {
           nextEndCursor = currentEndCursor;
-          yield delay(200);
+          yield delay(100);
           yield put({ type: 'PHOTOS_REQUEST_COMPLETE', photos });
         } else {
           nextEndCursor = null;

@@ -36,6 +36,7 @@ export default class Photos extends Component {
                 id={index}
                 onClick={() => this.props.onPhotoClick(index)}
                 src={pic.src}
+                alt="Фоточка"
               />
             </div>)}
         </div>

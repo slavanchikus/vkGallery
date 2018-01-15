@@ -12,7 +12,7 @@ import AlbumPicker from '../AlbumPicker/AlbumPicker';
 import Gallery from '../Gallery/Gallery';
 import FriendsBar from '../FriendsBar/FriendsBar';
 
-import { getAccessToken } from '../../utils/getAccessToken';
+import { getAccessToken } from '../../../index/utils/getAccessToken';
 
 import styles from './MainContainer.module.styl';
 
