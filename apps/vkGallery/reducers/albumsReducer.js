@@ -11,6 +11,9 @@ export default function albumsReducer(state = initialState, action) {
         items: action.payload.response
       };
     }
+    case 'USER_REQUEST_COMPLETE': {
+      return initialState;
+    }
     case 'PICK_ALBUM': {
       const { albumId, albumName } = action;
       return {
