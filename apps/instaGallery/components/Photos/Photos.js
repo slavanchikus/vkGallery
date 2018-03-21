@@ -9,24 +9,20 @@ export default class Photos extends Component {
     onPhotoClick: PropTypes.func.isRequired,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.photos !== this.props.photos;
-  }
-
   render() {
     const { photos } = this.props;
     return (
       <div className={styles.container}>
         {photos && photos.map((pic, index) =>
-          <div className={styles.img} key={pic.id}>
+          <div className={styles.img} key={pic.node.id}>
             <div className={styles.panel}>
-              <div className={styles.like} /><span className={styles.count}>{pic.likes.count}</span>
-              <div className={styles.comment} /><span className={styles.count}>{pic.comments.count}</span>
+              <div className={styles.like} /><span className={styles.count}>{pic.node.edge_media_preview_like.count}</span>
+              <div className={styles.comment} /><span className={styles.count}>{pic.node.edge_media_to_comment.count}</span>
             </div>
             <img
               id={index}
               onClick={() => this.props.onPhotoClick(index)}
-              src={pic.thumbnail_resources[0].src}
+              src={pic.node.thumbnail_resources[0].src}
               alt="Фоточка"
             />
           </div>)}

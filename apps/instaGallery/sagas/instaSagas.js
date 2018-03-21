@@ -5,25 +5,25 @@ import { getUser, getPhotos } from '../api/instaApi';
 export function* fetchUser({ inputValue }) {
   try {
     const payload = yield call(getUser, inputValue);
-    let photos = payload.user.media.nodes;
+    let photos = payload.graphql.user.edge_owner_to_timeline_media.edges;
 
     yield put({ type: 'USER_REQUEST_COMPLETE', payload });
     yield put({ type: 'PHOTOS_REQUEST_COMPLETE', photos });
 
-    if (payload.user.media.page_info.has_next_page && !payload.user.is_private) {
-      const firstEndCursor = payload.user.media.page_info.end_cursor;
+    if (payload.graphql.user.edge_owner_to_timeline_media.page_info.has_next_page && !payload.graphql.user.is_private) {
+      const firstEndCursor = payload.graphql.user.edge_owner_to_timeline_media.page_info.end_cursor;
 
-      const nextPayload = yield call(getPhotos, inputValue, firstEndCursor);
-      photos = nextPayload.user.media.nodes;
+      const nextPayload = yield call(getPhotos, payload.graphql.user.id, firstEndCursor);
+      photos = nextPayload.data.user.edge_owner_to_timeline_media.edges;
 
       yield put({ type: 'PHOTOS_REQUEST_COMPLETE', photos });
 
-      let nextEndCursor = nextPayload.user.media.page_info.end_cursor;
+      let nextEndCursor = nextPayload.data.user.edge_owner_to_timeline_media.page_info.end_cursor;
       while (nextEndCursor) {
-        const currentPayload = yield call(getPhotos, inputValue, nextEndCursor);
-        photos = currentPayload.user.media.nodes;
+        const currentPayload = yield call(getPhotos, payload.graphql.user.id, nextEndCursor);
+        photos = currentPayload.data.user.edge_owner_to_timeline_media.edges;
 
-        const currentEndCursor = currentPayload.user.media.page_info.end_cursor;
+        const currentEndCursor = currentPayload.data.user.edge_owner_to_timeline_media.page_info.end_cursor;
         if (currentEndCursor) {
           nextEndCursor = currentEndCursor;
           yield delay(100);

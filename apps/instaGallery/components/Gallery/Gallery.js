@@ -83,14 +83,14 @@ export default class Gallery extends Component {
           <div onClick={this.handleClick}>
             <img
               ref={node => (this.photo = node)}
-              src={photos[photoIndex].display_src}
+              src={photos[photoIndex].node.display_url}
               alt="Фоточка"
             />
             <div className={styles.info}>
-              {`Дата публикации: ${unixstampConverter(photos[photoIndex].date)}`}
+              {`Дата публикации: ${unixstampConverter(photos[photoIndex].node.taken_at_timestamp)}`}
               <div className={styles.like_block}>
                 <div className={styles.like} />
-                {photos[photoIndex].likes.count}
+                {photos[photoIndex].node.edge_media_preview_like.count}
               </div>
             </div>
           </div>

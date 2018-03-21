@@ -44,26 +44,26 @@ export default class Settings extends Component {
           onSortLikes={onSortLikes}
           onSortComments={onSortComments}
         />
-        {showSpinner && user.media && !user.error &&
+        {showSpinner && user.edge_owner_to_timeline_media && !user.error &&
           <div className={styles.load_container}>
             <div className={styles.spinner_container}>
               <div className={styles.spinner} />
             </div>
-            <div className={styles.loadbar}>{photosLen} загружено из {user.media.count}</div>
+            <div className={styles.loadbar}>{photosLen} загружено из {user.edge_owner_to_timeline_media.count}</div>
           </div>}
-        {user.username && user.media.count === 0 &&
+        {user.username && user.edge_owner_to_timeline_media.count === 0 &&
           <div className={styles.error}>У существующего пользователя нет фоток :(</div>}
         {user.username && user.is_private &&
           <div className={styles.error}>Данный аккаунт является приватным :(</div>}
         {user.error &&
           <div className={styles.error}>Юзера с таким ид не существует :(</div>}
-        {user.username && user.media.count > 0 && !user.error &&
+        {user.username && user.edge_owner_to_timeline_media.count > 0 && !user.error &&
           <div className={styles.info_block}>
-            {!showSpinner && <div className={styles.info}>Публикации: {user.media.count}</div>}
+            {!showSpinner && <div className={styles.info}>Публикации: {user.edge_owner_to_timeline_media.count}</div>}
             <div className={styles.info}>
-                Подписки: {user.follows.count}
+                Подписки: {user.edge_follow.count}
               <br />
-                Подписчики: {user.followed_by.count}
+                Подписчики: {user.edge_followed_by.count}
             </div>
             <div className={styles.info}>Выбранный пользователь:<br />{user.full_name || user.username}</div>
           </div>}

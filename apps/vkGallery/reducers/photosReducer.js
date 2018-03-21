@@ -11,7 +11,8 @@ export default function photoReducer(state = initialState, action) {
       return state;
     }
     case 'PHOTOS_REQUEST_COMPLETE': {
-      const { response, error } = action.payload;
+      const { error } = action.payload;
+      const response = action.payload.response.slice(1);
 
       if (error) {
         return initialState;
