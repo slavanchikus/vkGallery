@@ -18,10 +18,10 @@ export default function photoReducer(state = initialState, action) {
         return initialState;
       }
 
-      const currentUserId = state[0] ? state[0].owner_id : null;
-      const responseUserId = response[0] ? response[0].owner_id : null;
-      const currentAlbumId = state[0] ? state[0].aid : null;
-      const responseAlbumId = response[0] ? response[0].aid : null;
+      const currentUserId = state[1] ? state[1].owner_id : null;
+      const responseUserId = response[1] ? response[1].owner_id : null;
+      const currentAlbumId = state[1] ? state[1].aid : null;
+      const responseAlbumId = response[1] ? response[1].aid : null;
 
       if (currentUserId !== responseUserId || currentAlbumId !== responseAlbumId) {
         return response;

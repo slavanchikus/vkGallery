@@ -20,13 +20,13 @@ export default class StartPoint extends Component {
           onMouseEnter={() => this.handleMouseEnter('#a7d8fa')}
           onMouseLeave={() => this.handleMouseLeave('#edeef0')}
         >
-          <Link to="/vk" className={styles.vk} />
+          <Link to="/gallery/vk" className={styles.vk} />
         </div>
         <div
           onMouseEnter={() => this.handleMouseEnter('#fabfa7')}
           onMouseLeave={() => this.handleMouseLeave('#edeef0')}
         >
-          <Link to="/insta" className={styles.insta} />
+          <Link to="/gallery/insta" className={styles.insta} />
         </div>
       </div>
     );

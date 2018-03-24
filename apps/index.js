@@ -11,9 +11,9 @@ export class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path="/" component={StartPoint} />
-          <Route path="/vk" component={vkGallery} />
-          <Route path="/insta" component={instaGallery} />
+          <Route exact path="/gallery/" component={StartPoint} />
+          <Route path="/gallery/vk" component={vkGallery} />
+          <Route path="/gallery/insta" component={instaGallery} />
         </div>
       </BrowserRouter>
     );

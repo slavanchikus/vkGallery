@@ -49,11 +49,8 @@ class MainContainer extends Component {
   }
 
   componentWillReceiveProps({ user, friends, albums, uiState }) {
-    if (this.props.user.id !== user.id && !user.error) {
-      this.props.photoRequest(user.id, 0, 50, this.props.albums.selectedAlbumId);
-    }
-    if (this.props.albums.selectedAlbumId !== albums.selectedAlbumId && !user.error && this.props.user.id === user.id) {
-      this.props.photoRequest(this.props.user.id, 0, 50, albums.selectedAlbumId);
+    if (!user.error && (this.props.user.id !== user.id || this.props.albums.selectedAlbumId !== albums.selectedAlbumId)) {
+      this.props.photoRequest(user.id, 0, 50, albums.selectedAlbumId);
     }
     if (this.props.friends !== friends) {
       this.setState({ isAppReady: true });
