@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './StartPoint.module.styl';
+import styles from './index.module.styl';
 
 export default class StartPoint extends Component {
 
@@ -20,13 +20,19 @@ export default class StartPoint extends Component {
           onMouseEnter={() => this.handleMouseEnter('#a7d8fa')}
           onMouseLeave={() => this.handleMouseLeave('#edeef0')}
         >
-          <Link to="/vk" className={styles.vk} />
+          <Link to="/vkgallery" className={styles.vk} />
         </div>
         <div
           onMouseEnter={() => this.handleMouseEnter('#fabfa7')}
           onMouseLeave={() => this.handleMouseLeave('#edeef0')}
         >
-          <Link to="/insta" className={styles.insta} />
+          <Link to="/instagallery" className={styles.insta} />
+        </div>
+        <div
+          onMouseEnter={() => this.handleMouseEnter('#dce082')}
+          onMouseLeave={() => this.handleMouseLeave('#edeef0')}
+        >
+          <Link to="/vkaudio" className={styles.music} />
         </div>
       </div>
     );

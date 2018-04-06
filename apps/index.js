@@ -4,7 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import { vkGallery } from './vkGallery/index';
 import { instaGallery } from './instaGallery/index';
-import StartPoint from './index/components/StartPoint/StartPoint';
+import { vkAudio } from './vkAudio/index';
+import StartPoint from './index/index';
 
 export class App extends Component {
   render() {
@@ -12,8 +13,9 @@ export class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={StartPoint} />
-          <Route path="/vk" component={vkGallery} />
-          <Route path="/insta" component={instaGallery} />
+          <Route path="/vkgallery" component={vkGallery} />
+          <Route path="/instagallery" component={instaGallery} />
+          <Route path="/vkaudio" component={vkAudio} />
         </div>
       </BrowserRouter>
     );

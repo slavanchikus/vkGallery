@@ -5,8 +5,6 @@ import cx from 'classnames';
 
 import styles from './SettingButtons.module.styl';
 
-import { buildPlaylist } from './audioTest';
-
 export default class SettingButtons extends Component {
   static propTypes = {
     inputValue: PropTypes.string.isRequired,
@@ -28,7 +26,6 @@ export default class SettingButtons extends Component {
   handleUserRequest = () => {
     const { onUserRequest, inputValue } = this.props;
     onUserRequest(inputValue);
-    buildPlaylist();
   };
 
   render() {
