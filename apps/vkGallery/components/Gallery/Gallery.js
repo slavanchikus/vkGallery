@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { unixstampConverter } from '../../../index/utils/convertUnixstamp';
+import { unixstampConverter } from '../../utils/convertUnixstamp';
 
 import styles from './Gallery.module.styl';
 
