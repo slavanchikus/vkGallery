@@ -28,12 +28,6 @@ export default class StartPoint extends Component {
         >
           <Link to="/instagallery" className={styles.insta} />
         </div>
-        <div
-          onMouseEnter={() => this.handleMouseEnter('#dce082')}
-          onMouseLeave={() => this.handleMouseLeave('#edeef0')}
-        >
-          <Link to="/vkaudio" className={styles.music} />
-        </div>
       </div>
     );
   }

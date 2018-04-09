@@ -4,7 +4,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import { vkGallery } from './vkGallery/index';
 import { instaGallery } from './instaGallery/index';
-import { vkAudio } from './vkAudio/index';
 import StartPoint from './index/index';
 
 export class App extends Component {
@@ -15,7 +14,6 @@ export class App extends Component {
           <Route exact path="/" component={StartPoint} />
           <Route path="/vkgallery" component={vkGallery} />
           <Route path="/instagallery" component={instaGallery} />
-          <Route path="/vkaudio" component={vkAudio} />
         </div>
       </BrowserRouter>
     );
